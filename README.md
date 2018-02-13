@@ -11,6 +11,6 @@ npm install
 # запуск на локальном сервере с hot-reload (localhost:8080)
 npm run dev
 
-# сбока для production с минификацией
+# сборка для production с минификацией
 npm run build
 ```

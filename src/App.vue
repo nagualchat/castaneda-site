@@ -2,17 +2,19 @@
   <div id="app">
 
 		<b-navbar type="dark" variant="dark">
-			<b-navbar-brand href="#">Список перепросмотра</b-navbar-brand>
-      <b-navbar-nav class="ml-auto">
-        <b-nav-form>
-          <b-button size="sm" class="my-2 my-sm-0" 
-          @click="debug = !debug" :variant="debug == false ? 'secondary' : 'success'">Отладка</b-button>
-        </b-nav-form>
-      </b-navbar-nav>
+      <b-container>
+        <b-navbar-brand href="#">Список перепросмотра</b-navbar-brand>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+            <b-button size="sm" class="my-2 my-sm-0"
+            @click="debug = !debug" :variant="debug == false ? 'secondary' : 'success'">Отладка</b-button>
+          </b-nav-form>
+        </b-navbar-nav>
+      </b-container>
 		</b-navbar>
 
-    </br>
- 
+    <br>
+
     <b-container>
         <b-row class="justify-content-md-center">
             <b-col col md="10">
