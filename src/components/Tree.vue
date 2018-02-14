@@ -1,41 +1,46 @@
 <template>
   <ul>
-    <draggable class="drop" :list="list" :options="{animation: 150, group: 'node', forceFallback: false}">
-        <li v-for="(item, index) in list" :key="item.id">
-      
-          <div class ="element" :class="{'selected':selectItemId === item.id}" 
+    <draggable class="drop" :list="list" :options="{ animation: 150, group: 'node', forceFallback: false }">
+        <li v-for="(item, index) in list" :key="item.id" :class="{ collapsed: item.collapse == true }">
+
+          <div class="chevron" v-if="item.node && item.node.length > 0">
+            <i class="material-icons" @click="toggle(index)">
+              {{ item.collapse ? 'keyboard_arrow_right' : 'keyboard_arrow_down' }}
+            </i>
+          </div>
+
+          <div class ="element" :class="{ selected: selectItemId === item.id }"
            @click="selectItem(item)" @dblclick="editName(item)">
-            <input class="rename" type="text" v-if="item.id === renameItemId" 
+            <input class="rename" type="text" v-if="item.id === renameItemId"
              v-focus @keyup.enter="doneEditName(item)" @keyup.esc="cancelEditName(item)"
              @blur="doneEditName(item)" v-model="item.name">
-              <span class="name" v-if="item.id !== renameItemId">{{item.name}}</span>
-              <span class="element-menu" v-show="selectItemId === item.id">
-                <span @click="addItemId = item.id"><i class="material-icons">add</i></span>
-                <span @click="editName(item)"><i class="material-icons">edit</i></span>
-                <span @click="removeItem(item)"><i class="material-icons">delete</i></span>
-              </span>
-            </div>
+            <span class="name" v-if="item.id !== renameItemId">{{ item.name }}</span>
+            <span class="element-menu" v-show="selectItemId === item.id">
+              <span @click="addItemId = item.id"><i class="material-icons">add</i></span>
+              <span @click="editName(item)"><i class="material-icons">edit</i></span>
+              <span @click="removeItem(item)"><i class="material-icons">delete</i></span>
+            </span>
+          </div>
 
-            <div class="element add-new" v-if="selectItemId === item.id && addItemId === item.id" @blur="cancelAddItem(item)">
-              <input class="rename" placeholder="Добавить в список" v-model="addItemName" 
-               v-focus @keyup.esc="cancelAddItem(item)" 
-               @keyup.enter="doneAddItem(item, index)">
-              <span class="element-menu">
-                <span @click="doneAddItem(item, index)"><i class="material-icons">done</i></span>
-                <span @click="cancelAddItem(item)"><i class="material-icons">cancel</i></span>
-              </span>
-            </div>
+          <div class="element add-new" v-if="selectItemId === item.id && addItemId === item.id" @blur="cancelAddItem(item)">
+            <input class="rename" placeholder="Добавить в список" v-model="addItemName"
+             v-focus @keyup.esc="cancelAddItem(item)"
+             @keyup.enter="doneAddItem(item, index)">
+            <span class="element-menu">
+              <span @click="doneAddItem(item, index)"><i class="material-icons">done</i></span>
+              <span @click="cancelAddItem(item)"><i class="material-icons">cancel</i></span>
+            </span>
+          </div>
 
-            <tree :list="item.node"/>
+          <tree v-if="!item.collapse" :list="item.node"/>
 
         </li>
     </draggable>
   </ul>
-  
 </template>
 
 <script>
-import { uuid } from 'vue-uuid'
+import { uuid } from "vue-uuid";
 import Draggable from "vuedraggable";
 
 export default {
@@ -56,14 +61,17 @@ export default {
   },
 
   methods: {
+    toggle(index) {
+      this.list[index].collapse = !this.list[index].collapse;
+    },
 
     doneAddItem: function(item, index) {
       if (!this.addItemName) {
-        this.addItemId = null
-        return
+        this.addItemId = null;
+        return;
       }
-      var name = this.addItemName.trim()
-      this.list.splice(index+1, 0, {id: uuid.v4(), name: name, node: []});
+      var name = this.addItemName.trim();
+      this.list.splice(index + 1, 0, { id: uuid.v4(), name: name, node: [] });
       this.addItemId = null;
       this.addItemName = null;
     },
@@ -85,7 +93,6 @@ export default {
 
     doneEditName: function(item) {
       this.renameItemId = null;
-      // Обрезает пробелы в начале и конце строки
       item.name = item.name.trim();
       if (!item.name) {
         this.removeItem(item);
@@ -103,14 +110,12 @@ export default {
   },
 
   mounted() {
-
     //Помещение данных о выделенном элементе в локальную переменную
     var vm = this;
 
     this.$root.$on("select", function(itemId) {
       vm.selectItemId = itemId;
-    })
-    
+    });
   },
 
   directives: {
@@ -126,7 +131,7 @@ export default {
 
 <style scoped>
   /* .sortable-ghost - освободившееся и выбранное место
-    .sortable-drag - перетаскиваеваемый (приподнятый) элемент */
+        .sortable-drag - перетаскиваеваемый (приподнятый) элемент */
 
   .sortable-ghost {
     opacity: 0;
@@ -146,11 +151,7 @@ export default {
   }
 
   ul li:first-child {
-    padding-top: 8px;
-  }
-
-  ul li:first-child {
-    padding-top: 8px;
+    margin-top: 8px;
   }
 
   .drop {
@@ -177,8 +178,20 @@ export default {
     cursor: pointer;
   }
 
+  .collapsed {
+    margin-bottom: 8px;
+  }
+
+  .chevron {
+    float: left;
+    position: relative;
+    left: -30px;
+    top: 10px;
+  }
+
   div.element input {
     height: 20px;
+    border: none;
   }
 
   div.element input:focus {
@@ -190,8 +203,7 @@ export default {
   }
 
   .selected {
-    border: 1px solid  rgba(0, 0, 0, 0.4);
-
+    border: 1px solid rgba(0, 0, 0, 0.4);
   }
 
   .add-new {
@@ -199,5 +211,4 @@ export default {
     margin-top: 8px;
     cursor: default;
   }
-
 </style>
