@@ -17,6 +17,7 @@ import InfoPage from "@/pages/InfoPage"
 export default new Router({
   mode: "history",
   linkActiveClass: "is-active",
+  base: "/recapitulation-app/",
   routes: [
     {
       path: "/",
