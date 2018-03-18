@@ -34,7 +34,6 @@ export default new Router({
         route("flo", "InfoFlo"),
         route("cla", "InfoCla")
       ]
-    },
-    { path: "*", redirect: "/" }
+    }
   ]
 })
