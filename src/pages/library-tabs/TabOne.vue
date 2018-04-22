@@ -163,7 +163,7 @@
       <tr>
         <td>На английском</td>
         <td>
-          <a href="/static/lib/eagles-gift/Six Explanatory Propositions">doc</a>
+          <a href="/static/lib/eagles-gift/Six Explanatory Propositions.doc">doc</a>
         </td>
       </tr>
     </table>
@@ -206,7 +206,7 @@
     </table>
 
     <div class="has-text-centered" style="margin-top: 2em;">
-      <a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/nagualchat/nagualchat.github.io/tree/master/nagualchat-lib" target="_blank">Скачать все книги одним архивом</a>
+      <a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/nagualchat/site/tree/master/docs/static/lib" target="_blank">Скачать все книги одним архивом</a>
     </div>
 
   </div>

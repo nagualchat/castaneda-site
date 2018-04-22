@@ -1,7 +1,7 @@
 var config = module.exports = {}
 
 if (process.env.NODE_ENV === 'production') {
-  config.selfHost = 'https://nagualchat.github.io/'
+  config.selfHost = 'http://nagualchat.ml/'
 } else {
   config.selfHost = 'http://localhost:8080/'
 }
