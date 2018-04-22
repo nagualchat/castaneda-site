@@ -1,0 +1,262 @@
+/* Изменения бульмовских классов */
+
+.navbar-brand>.is-active {
+  background-color: inherit !important;
+}
+
+.input:focus {
+  box-shadow: none;
+  border-color: $grey-light;
+}
+
+.content table tr:hover {
+  background-color: transparent !important;
+}
+
+/* Общее */
+
+.is-fullheight {
+  min-height: 95vh;
+}
+
+.is-unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.is-borderless {
+  border: none !important;
+}
+
+.invert-link {
+  color: $text;
+}
+
+.invert-link:hover {
+  color: $link;
+}
+
+.icon-link {
+  color: $dark;
+  cursor: pointer;
+}
+
+.icon-link:hover {
+  color: $link;
+}
+
+/* Поисковик */
+
+.search-title {
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 18vh;
+  margin-bottom: 3vh;
+}
+
+.search-header {
+  margin-bottom: 1vh !important;
+}
+
+.search-options {
+  margin-bottom: 1vh;
+}
+
+.search-stats {
+  float: right;
+}
+
+.search-item {
+  padding: 20px 0px;
+  border-bottom: 2px solid #f5f5f5;
+}
+
+.search-item-title {
+  font-size: 1em; //font-weight: bold;
+}
+
+.search-item-subtitle {
+  font-size: 0.9em;
+  margin-bottom: 5px; //font-weight: bold;
+}
+
+.search-item-text {
+  font-size: 1em
+}
+
+.highlight {
+  background-color: #fae8b9;
+  //font-style: italic;
+}
+
+/* Каталог книг */
+
+
+
+#lib h1.title {
+  margin-bottom: 0px !important;
+ }
+
+#lib div.subtitle {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+ }
+
+#lib table {
+  margin-top: 0.8em;
+ }
+
+
+#lib table tr td:last-child {
+  width: 15%;
+}
+
+/* Читалка */
+
+.book-title {
+  font-size: $size-4;
+  font-weight: $weight-semibold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.ch-title {
+  font-size: $size-5;
+  font-weight: $weight-semibold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.ch-subtitle {
+  font-size: 1.05em;
+  font-weight: $weight-semibold;
+  text-indent: 1.2em;
+  margin-top: 10px;
+}
+
+.ch-paragraph {
+  text-indent: 1.2em;
+}
+
+.ch-empty-line {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.ch-epigraph {
+  margin: 0 auto;
+  margin-right: 5em;
+  margin-left: 25%;
+  font-style: italic;
+}
+
+.ch-poem {
+  display: table;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+.ch-hightlight {
+  background-color: #fae8b9;
+}
+
+.toc-child {
+  margin-left: 1em;
+}
+
+.reader-nav {
+  margin-top: 1em;
+  padding-top: 0.2em;
+  border-top: 1px solid $grey-lighter;
+}
+
+/* Страница списка перепросмотра */
+
+.notify {
+  font-size: 0.9em;
+  color: desaturate(darken($primary, colorLuminance($primary) * 70%), colorLuminance($primary) * 30%);
+  border: 1px solid $primary;
+  background-color: lighten($primary, max((100% - lightness($primary)) - 2%, 0%)) !important;
+}
+
+.tree-header {
+  border-bottom: 1px solid $border;
+  margin-bottom: 20px !important;
+}
+
+.tree-header a {
+  margin: 0;
+  padding: 0.5em 1em;
+}
+
+.tree-header-info {
+  min-width: 250px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tree {
+  margin-right: 16px;
+}
+
+/* Страница справки */
+
+span.key {
+  background-color: #f3f3f3;
+  border: 1px solid $grey-light;
+  border-radius: 2px;
+  padding: 0px 5px;
+}
+
+.info-sidebar {
+  margin-top: 0.5em;
+}
+
+ul.menu-list>li>.is-active {
+  background-color: $dark !important;
+}
+
+.info-content {
+  margin-top: 0.5em;
+}
+
+/* Список списков */
+
+.lists-element {
+  margin: 10px 0 !important;
+}
+
+dl.inline {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+dl.inline dt {
+  width: 20%;
+}
+
+dl.inline dd {
+  margin-left: auto;
+  width: 80%;
+}
+
+/* Компонент блока цитаты */
+
+blockquote.book {
+  padding: 0 0.75em;
+  border-left: 2px solid $border;
+  margin-bottom: 1.5em !important;
+  background-color: $white !important;
+}
+
+blockquote.book p {
+  margin-bottom: 0.5em !important;
+}
+
+blockquote.book cite {
+  font-style: normal;
+  margin-left: 0.75em;
+}
