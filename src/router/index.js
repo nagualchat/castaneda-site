@@ -10,7 +10,6 @@ import ListPage from "@/pages/ListPage"
 import ListInfo from "@/pages/ListInfo"
 
 export default new Router({
-  mode: "hash",
   linkActiveClass: "is-active",
   routes: [
     {

@@ -31,7 +31,6 @@
         td #[span.key -]
         td Вычеркнуть
 
-
 </template>
 
 <script>

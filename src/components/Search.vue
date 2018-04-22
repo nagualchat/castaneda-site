@@ -40,8 +40,7 @@
 
     <div class="search-item" v-for="(item, index) in results" :key="index">
       <div class="search-item-title">
-        <a :href="`/reader?book=${item._source.book.id}&ch=${item._source.chapter.id}&p=${item._source.content.number}`" target="_blank">{{ item._source.book.author }} — {{ item._source.book.title }}</a>
-        <!-- <a href="/lib">{{ item._source.book.author }} — {{ item._source.book.title }}</a> -->
+      <router-link :to="`/reader?book=${item._source.book.id}&ch=${item._source.chapter.id}&p=${item._source.content.number}`" target="_blank">{{ item._source.book.author }} — {{ item._source.book.title }}</router-link>
       </div>
       <div class="search-item-subtitle">{{ item._source.chapter.title }}</div>
       <div class="search-item-title" v-html="item.highlight['content.text'][0]"></div>

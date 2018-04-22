@@ -33,7 +33,7 @@
       },
 
       url: function() {
-          return "/reader?book=" + this.decode[1] + "&ch=" + this.decode[2] + "&p=" + this.decode[3]
+          return "/#/reader?book=" + this.decode[1] + "&ch=" + this.decode[2] + "&p=" + this.decode[3]
       }
     }
   }
