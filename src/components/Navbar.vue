@@ -20,7 +20,7 @@
         </div>
 
         <div class="navbar-end" @click="isMenuOpen = !isMenuOpen">
-          <router-link class="navbar-item" to="/search">Поиск</router-link>
+          <router-link class="navbar-item" to="/">Поиск</router-link>
           <router-link class="navbar-item" to="/lib">Библиотека</router-link>
           <router-link class="navbar-item" to="/list">Перепросмотр</router-link>
 

@@ -15,10 +15,6 @@ export default new Router({
   routes: [
     {
       path: "/",
-      redirect: "/search",
-    },
-    {
-      path: "/search",
       component: SearchPage
     },
     {
@@ -37,5 +33,8 @@ export default new Router({
       path: "/:reader",
       component: ReaderPage
     },
+    {
+      path: "*", redirect: "/"
+    }
   ]
 })
