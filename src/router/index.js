@@ -10,7 +10,7 @@ import ListPage from "@/pages/ListPage"
 import ListInfo from "@/pages/ListInfo"
 
 export default new Router({
-  mode: "history",
+  mode: "hash",
   linkActiveClass: "is-active",
   routes: [
     {
@@ -18,19 +18,19 @@ export default new Router({
       component: SearchPage
     },
     {
-      path: "*/lib",
+      path: "/lib",
       component: LibraryPage
     },
     {
-      path: "*/list",
+      path: "/list",
       component: ListPage
     },
     {
-      path: "*/list-info",
+      path: "/list-info",
       component: ListInfo
     },
     {
-      path: "*/:reader",
+      path: "/:reader",
       component: ReaderPage
     },
     {
