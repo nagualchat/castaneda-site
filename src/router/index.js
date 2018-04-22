@@ -18,19 +18,19 @@ export default new Router({
       component: SearchPage
     },
     {
-      path: "/lib",
+      path: "*/lib",
       component: LibraryPage
     },
     {
-      path: "/list",
+      path: "*/list",
       component: ListPage
     },
     {
-      path: "/list-info",
+      path: "*/list-info",
       component: ListInfo
     },
     {
-      path: "/:reader",
+      path: "*/:reader",
       component: ReaderPage
     },
     {
