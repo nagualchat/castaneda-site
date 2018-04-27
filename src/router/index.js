@@ -11,6 +11,7 @@ import ListInfo from "@/pages/ListInfo"
 
 export default new Router({
   linkActiveClass: "is-active",
+  mode: "hash",
   routes: [{
       path: "/",
       redirect: "/search"
