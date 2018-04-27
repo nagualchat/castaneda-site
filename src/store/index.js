@@ -1,7 +1,7 @@
 import Vue from "vue"
 import Vuex from "vuex"
-import main from './modules/main.js'
-import list from './modules/list'
+import main from "./modules/main.js"
+import list from "./modules/list"
 
 Vue.use(Vuex)
 

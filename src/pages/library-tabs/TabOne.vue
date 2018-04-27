@@ -10,10 +10,10 @@
       <tr>
         <td>
           <span>1.</span>
-          <router-link :to="`/reader?book=${rlist[0].id}&ch=0`" target="_blank">{{ rlist[0].title }}</router-link>
+          <router-link :to="`/reader?book=${rlist[0].id}&ch=0`">{{ rlist[0].title }}</router-link>
           <div style="padding-bottom: 0.8em;"></div>
           <span>2.</span>
-          <router-link :to="`/reader?book=${rlist[1].id}&ch=0`" target="_blank">{{ rlist[1].title }}</router-link>
+          <router-link :to="`/reader?book=${rlist[1].id}&ch=0`">{{ rlist[1].title }}</router-link>
         </td>
         <td>{{ rlist[0].tran }}</td>
         <td>
@@ -25,7 +25,7 @@
       <tr v-for="(item, index) in rlist.slice(2)" :key="index">
         <td>
           <span>{{ index + 3 }}.</span>
-          <router-link :to="`/reader?book=${item.id}&ch=0`" target="_blank">{{ item.title }}</router-link>
+          <router-link :to="`/reader?book=${item.id}&ch=0`">{{ item.title }}</router-link>
         </td>
         <td>{{ item.tran }}</td>
         <td>
@@ -42,7 +42,7 @@
     <table class="table">
       <tr>
         <td>
-          <router-link to="/reader?book=taisha&ch=0" target="_blank">Тайша Абеляр — Магический переход</router-link>
+          <router-link to="/reader?book=taisha&ch=0">Тайша Абеляр — Магический переход</router-link>
         </td>
         <td>
           <a href="/static/lib/witches/Тайша Абеляр - Магический переход.fb2">fb2</a>
@@ -52,7 +52,7 @@
       </tr>
       <tr>
         <td>
-          <router-link to="/reader?book=florinda&ch=0" target="_blank">Флоринда Доннер — Жизнь-в-сновидении</router-link>
+          <router-link to="/reader?book=florinda&ch=0">Флоринда Доннер — Жизнь-в-сновидении</router-link>
         </td>
         <td>
           <a href="/static/lib/witches/Флоринда Доннер - Жизнь-в-сновидении.fb2">fb2</a>

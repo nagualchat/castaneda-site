@@ -17,12 +17,12 @@
 
           <div class="level-right">
             <div class="level-item">
-              <a class="button is-small is-dark" title="Переименовать" @click="renameDialog(list)">
+              <a class="button is-small is-accent" title="Переименовать" @click="renameDialog(list)">
                 <b-icon custom-size="mdi-18px" icon="pencil"></b-icon>
               </a>
             </div>
             <div class="level-item">
-              <a class="button is-small is-dark" title="Экспортировать" @click="exportFile(list)">
+              <a class="button is-small is-accent" title="Экспортировать" @click="exportFile(list)">
                 <b-icon custom-size="mdi-18px" icon="export"></b-icon>
               </a>
             </div>
@@ -37,13 +37,13 @@
       </section>
 
       <footer class="modal-card-foot">
-        <a class="button is-dark" @click="createList()">
+        <a class="button is-accent" @click="createList()">
           <b-icon icon="plus"></b-icon>
           <span>Создать новый</span>
         </a>
 
         <b-upload accept=".json" v-model="file" @input="importFile()">
-          <a class="button is-dark">
+          <a class="button is-accent">
             <b-icon icon="upload"></b-icon>
             <span>Импортировать</span>
           </a>
@@ -118,3 +118,9 @@
     }
   }
 </script>
+
+<style lang="scss">
+  .lists-element {
+    margin: 10px 0 !important;
+  }
+</style>

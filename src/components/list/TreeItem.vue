@@ -108,3 +108,77 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  @import '@/assets/variables.scss';
+
+  .sortable-ghost {
+    opacity: 0;
+  }
+
+  .sortable-drag {
+    opacity: 1;
+  }
+
+  ul, li {
+    list-style: none;
+    padding-left: 10px;
+    font-size: 0.9rem;
+  }
+
+  li:first-child {
+    margin-top: 5px;
+  }
+
+  .chevron {
+    color: $tree-icon;
+    float: left;
+    width: 0px;
+    position: relative;
+    left: -25px;
+    top: 7px;
+    cursor: pointer;
+  }
+
+  .element {
+    padding: 8px 10px;
+  }
+
+  .element input {
+    height: 20px;
+    border: none;
+    font-size: 0.9rem;
+  }
+
+  .element input:focus {
+    outline: none;
+  }
+
+  .element-selected {
+    background-color: $background;
+  }
+
+  .element-add {
+    border: 1px dashed $tree-border-active;
+    margin-top: 8px;
+    cursor: default;
+  }
+
+  .element-menu {
+    float: right;
+    line-height: 1.2;
+  }
+
+  .icon-inactive {
+    color: $tree-icon;
+  }
+
+  .icon-active {
+    color: $tree-icon;
+    cursor: pointer;
+  }
+
+  .icon-active:hover {
+    color: $tree-icon-hover;
+  }
+</style>

@@ -33,7 +33,7 @@
               </div>
 
               <div class="level-item">
-                <router-link class="icon icon-link is-borderless" to="/list-info">
+                <router-link class="icon invert-link is-borderless" to="/list-info">
                   <b-icon icon="help-circle-outline"></b-icon>
                 </router-link>
               </div>
@@ -127,5 +127,33 @@
   };
 </script>
 
-<style>
+<style lang="scss">
+  @import '@/assets/variables.scss';
+
+  .notify {
+    font-size: 0.9em;
+    color: desaturate(darken($primary, colorLuminance($primary) * 70%), colorLuminance($primary) * 30%);
+    border: 1px solid $primary;
+    background-color: lighten($primary, max((100% - lightness($primary)) - 2%, 0%)) !important;
+  }
+
+  .tree-header {
+    border-bottom: 1px solid $border;
+    margin-bottom: 20px !important;
+  }
+
+  .tree-header a {
+    margin: 0;
+    padding: 0.5em 1em;
+  }
+
+  .tree-header-info {
+    min-width: 250px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .tree {
+    margin-right: 16px;
+  }
 </style>

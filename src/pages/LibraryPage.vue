@@ -1,5 +1,5 @@
 <template>
-  <div id="info">
+  <div id="library">
     <div class="columns is-centered">
       <div class="column is-9-tablet is-8-desktop is-7-widescreen is-6-fullhd">
         <b-tabs v-model="activeTab">
@@ -44,5 +44,23 @@
   }
 </script>
 
-<style>
+<style lang="scss">
+  @import '@/assets/variables.scss';
+
+  #library h1.title {
+    margin-bottom: 0px !important;
+  }
+
+  #library div.subtitle {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+  }
+
+  #library table {
+    margin-top: 0.8em ;
+  }
+
+  #library table tr td:last-child {
+    width: 15%;
+  }
 </style>

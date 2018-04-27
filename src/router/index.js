@@ -11,9 +11,22 @@ import ListInfo from "@/pages/ListInfo"
 
 export default new Router({
   linkActiveClass: "is-active",
-  routes: [
-    {
+  mode: "history",
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return { selector: to.hash }
+    } else if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 }
+    }
+  },
+  routes: [{
       path: "/",
+      redirect: "/search"
+    },
+    {
+      path: "/search",
       component: SearchPage
     },
     {
@@ -29,11 +42,12 @@ export default new Router({
       component: ListInfo
     },
     {
-      path: "/:reader",
+      path: "/reader",
       component: ReaderPage
     },
     {
-      path: "*", redirect: "/"
+      path: "*",
+      redirect: "/"
     }
   ]
 })

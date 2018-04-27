@@ -3,7 +3,7 @@
 
     <app-navbar/>
 
-    <section class="section is-fullheight" style="padding-top: 1em;">
+    <section class="section is-fullheight" style="padding-top: 1em">
       <router-view/>
     </section>
 
@@ -14,22 +14,21 @@
   import Navbar from "@/components/Navbar";
 
   export default {
-    name: 'App',
+    name: "App",
     components: {
-      'app-navbar': Navbar,
+      "app-navbar": Navbar,
     },
 
     computed: {
-      isDarkTheme () {
-        return this.$store.state.isDarkTheme
+      isDarkTheme() {
+        return this.$store.state.main.isDarkTheme
       }
     }
   }
 </script>
 
 <style lang="scss">
-  @import './assets/variables.scss';
-
+  @import "./assets/variables.scss";
   .dark {
     @import "./assets/dark/variables.scss";
     @import "./assets/dark/overrides.scss";
@@ -37,8 +36,9 @@
 
   @import "~bulma";
   @import "~buefy/src/scss/buefy";
+  @import "./assets/main.scss";
 
-  @import './assets/main.scss';
-  @import './assets/tree.scss';
-
+  .is-fullheight {
+    min-height: 90vh;
+  }
 </style>

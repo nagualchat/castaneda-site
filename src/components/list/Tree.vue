@@ -31,3 +31,11 @@
     }
   }
 </script>
+
+<style lang="scss">
+  @import '@/assets/variables.scss';
+
+  .drop-zone {
+    min-height: 5px;
+  }
+</style>

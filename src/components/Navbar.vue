@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <nav class="navbar is-black">
+    <nav class="navbar is-secondary">
       <div class="navbar-brand">
 
         <router-link class="navbar-item" to="/">
@@ -20,9 +20,19 @@
         </div>
 
         <div class="navbar-end" @click="isMenuOpen = !isMenuOpen">
-          <router-link class="navbar-item" to="/">Поиск</router-link>
+          <router-link class="navbar-item" to="/search">Поиск</router-link>
           <router-link class="navbar-item" to="/lib">Библиотека</router-link>
           <router-link class="navbar-item" to="/list">Перепросмотр</router-link>
+
+          <a class="navbar-item is-hidden-desktop" href="https://t.me/nagualchat" target="_blank">
+            <span>Группа в телеграме</span>
+            <b-icon size="is-small" icon="open-in-new"></b-icon>
+          </a>
+
+          <a class="navbar-item is-hidden-desktop" href="https://github.com/nagualchat/nagualchat-site" target="_blank">
+            <span>Гитхаб</span>
+            <b-icon size="is-small" icon="open-in-new"></b-icon>
+          </a>
 
           <div class="navbar-item is-hidden" :class="{ 'is-hidden': this.$route.path != '/list' }">
             <b-switch size="is-small" v-model="isDebugChecked"></b-switch>
@@ -30,8 +40,11 @@
           </div>
 
           <div class="navbar-item">
+            <span class="is-hidden-desktop">Ночная тема</span>
+
             <b-switch size="is-small" v-model="isThemeChecked" title="Ночная тема" disabled></b-switch>
-            <b-icon custom-size="mdi-18px" icon="weather-night"></b-icon>
+            <b-icon class="is-hidden-mobile" custom-size="mdi-18px" icon="weather-night"></b-icon>
+
           </div>
         </div>
       </div>
@@ -79,3 +92,9 @@
     }
   }
 </script>
+
+<style lang="scss">
+  .navbar-brand>.is-active {
+    background-color: inherit !important;
+  }
+</style>
