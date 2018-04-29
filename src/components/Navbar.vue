@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <nav class="navbar is-secondary">
+    <nav class="navbar is-black">
       <div class="navbar-brand">
 
         <router-link class="navbar-item" to="/">
@@ -24,7 +24,7 @@
           <router-link class="navbar-item" to="/lib">Библиотека</router-link>
           <router-link class="navbar-item" to="/list">Перепросмотр</router-link>
 
-          <a class="navbar-item is-hidden-desktop" href="https://t.me/nagualchat" target="_blank">
+          <a class="navbar-item is-hidden-desktop" href="tg://resolve?domain=nagualchat" target="_blank">
             <span>Группа в телеграме</span>
             <b-icon size="is-small" icon="open-in-new"></b-icon>
           </a>

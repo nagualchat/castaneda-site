@@ -17,8 +17,7 @@
         </td>
         <td>{{ rlist[0].tran }}</td>
         <td>
-          <a :href="`/static/lib/cc-general/Карлос Кастанеда - ${rlist[0].title}, ${rlist[1].title} (carlitoska).fb2`">fb2</a>
-          <span>,</span>
+          <a :href="`/static/lib/cc-general/Карлос Кастанеда - ${rlist[0].title}, ${rlist[1].title} (carlitoska).fb2`">fb2</a>,
           <a :href="`/static/lib/cc-general/Карлос Кастанеда - ${rlist[0].title}, ${rlist[1].title} (carlitoska).mobi`">mobi</a>
         </td>
       </tr>
@@ -29,8 +28,7 @@
         </td>
         <td>{{ item.tran }}</td>
         <td>
-          <a :href="`/static/lib/cc-general/Карлос Кастанеда - ${item.title} (${item.tran}).fb2`">fb2</a>
-          <span>,</span>
+          <a :href="`/static/lib/cc-general/Карлос Кастанеда - ${item.title} (${item.tran}).fb2`">fb2</a>,
           <a :href="`/static/lib/cc-general/Карлос Кастанеда - ${item.title} (${item.tran}).mobi`">mobi</a>
         </td>
       </tr>
@@ -45,8 +43,7 @@
           <router-link to="/reader?book=taisha&ch=0">Тайша Абеляр — Магический переход</router-link>
         </td>
         <td>
-          <a href="/static/lib/witches/Тайша Абеляр - Магический переход.fb2">fb2</a>
-          <span>,</span>
+          <a href="/static/lib/witches/Тайша Абеляр - Магический переход.fb2">fb2</a>,
           <a href="/static/lib/witches/Тайша Абеляр - Магический переход.mobi">mobi</a>
         </td>
       </tr>
@@ -55,8 +52,7 @@
           <router-link to="/reader?book=florinda&ch=0">Флоринда Доннер — Жизнь-в-сновидении</router-link>
         </td>
         <td>
-          <a href="/static/lib/witches/Флоринда Доннер - Жизнь-в-сновидении.fb2">fb2</a>
-          <span>,</span>
+          <a href="/static/lib/witches/Флоринда Доннер - Жизнь-в-сновидении.fb2">fb2</a>,
           <a href="/static/lib/witches/Флоринда Доннер - Жизнь-в-сновидении.mobi">mobi</a>
         </td>
       </tr>
@@ -126,7 +122,7 @@
         <td>Перевод darorla.org</td>
         <td>
           <a href="http://darorla.org/index.php?topic=3717.0" target="_blank">forum</a>
-          <span>,</span>
+          ,
           <a href="/static/lib/analysis/Структурный анализ (перевод darorla.org, 2016г).doc">doc</a>
         </td>
       </tr>
@@ -175,8 +171,7 @@
         <td>Кастанеда и другие — Лекции и интервью</td>
         <td>Народная подборка</td>
         <td>
-          <a href="/static/lib/talks/Лекции и интервью (народная подборка).fb2">fb2</a>
-          <span>,</span>
+          <a href="/static/lib/talks/Лекции и интервью (народная подборка).fb2">fb2</a>,
           <a href="/static/lib/talks/Лекции и интервью (народная подборка).mobi">mobi</a>
         </td>
       </tr>
@@ -191,8 +186,7 @@
         <td>Кастанеда и другие — Лекции и интервью</td>
         <td>София, 2010 г.</td>
         <td>
-          <a href="/static/lib/talks/Лекции и интервью (София, 2010г).fb2">fb2</a>
-          <span>,</span>
+          <a href="/static/lib/talks/Лекции и интервью (София, 2010г).fb2">fb2</a>,
           <a href="/static/lib/talks/Лекции и интервью (София, 2010г).mobi">mobi</a>
         </td>
       </tr>
@@ -205,8 +199,8 @@
       </tr>
     </table>
 
-    <div class="has-text-centered" style="margin-top: 2em;">
-      <a href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/nagualchat/site/tree/master/docs/static/lib" target="_blank">Скачать все книги одним архивом</a>
+    <div id="download-all" class="has-text-centered">
+      <a class="button is-light" href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/nagualchat/site/tree/master/docs/static/lib" target="_blank"><b-icon icon="download"></b-icon><span>Скачать все книги одним архивом</span></a>
     </div>
 
   </div>
@@ -233,3 +227,12 @@
     }
   }
 </script>
+
+<style lang="scss">
+  @import '@/assets/variables.scss';
+
+  #download-all {
+    margin-top: 2em;
+    margin-bottom: -1em;
+  }
+</style>

@@ -4,7 +4,7 @@
     <b-taglist class="search-options">
        <b-tag style="padding-right: 0em;" type="is-white" class="queries-tag">Недавние запросы:</b-tag>
         <b-tag style="padding-left: 0em; padding-right: 0em;" type="is-white" class="queries-tag" v-for="(item, index) in queries" :key="index">
-           <router-link :to="`/search?query=${item._id}&books=${item.books}`">{{ truncate(item._id) }}</router-link>
+           <router-link :to="`/search?query=${item.query}&books=${item.books}`">{{ truncate(item.query) }}</router-link>
            <span>{{ index+1 >= queries.length ? '' : ',' }}</span>
         </b-tag>
     </b-taglist>
@@ -52,7 +52,7 @@
 <style lang="scss">
   @import '@/assets/variables.scss';
 
-  #search-queries {
+  #last-queries {
     margin-top: 1vh;
   }
 </style>

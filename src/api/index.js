@@ -6,8 +6,7 @@
  export default {
 
    async search(query, filter, offset) {
-    const save = true;
-    return await instance.get("/api/search", { params: { query, filter, offset, save } })
+    return await instance.get("/api/search", { params: { query, filter, offset } })
    },
 
    async getChapter(book, chapter) {
