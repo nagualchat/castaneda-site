@@ -3,8 +3,12 @@
     <div class="columns is-centered">
       <div class="column is-narrow">
         <br>
+        <a class="button is-white">White</a>
+        <a class="button is-light">Light</a>
+        <a class="button is-black">Black</a>
+        <a class="button is-dark">Dark</a>
         <a class="button is-primary">Primary</a>
-        <a class="button is-secondary">Dark</a>
+        <a class="button is-link">Link</a>
         <a class="button is-info">Info</a>
         <a class="button is-success">Success</a>
         <a class="button is-warning">Warning</a>

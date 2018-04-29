@@ -1,12 +1,11 @@
 <template>
   <div id="search-result">
-    <div class="search-stats">
-      <b-tag type="is-white" v-if="total">Результатов: {{ total }}</b-tag>
-    </div>
 
-    <div class="search-item" v-for="(item, index) in results" :key="index">
+    <b-tag class="search-stats" type="is-white" v-if="total">Результатов: {{ total }}</b-tag>
+
+    <div class="search-item content" v-for="(item, index) in results" :key="index">
       <div class="search-item-title">
-      <router-link :to="`/reader?book=${item._source.book.id}&ch=${item._source.chapter.id}&p=${item._source.content.number}`">{{ item._source.book.author }} — {{ item._source.book.title }}</router-link>
+      <router-link :to="`/reader?book=${item._source.book.id}&ch=${item._source.chapter.id}&p=${item._source.content.number}`" target="_blank">{{ item._source.book.author }} — {{ item._source.book.title }}</router-link>
       </div>
       <div class="search-item-subtitle">{{ item._source.chapter.title }}</div>
       <div class="search-item-title" v-html="item.highlight['content.text'][0]"></div>
@@ -80,20 +79,17 @@
 <style lang="scss">
   @import '@/assets/variables.scss';
 
+  #search-result {
+    margin-top: 1vh;
+  }
+
   .search-stats {
-    display: flex;
-    justify-content: flex-end;
-    //margin-bottom: -0.8em;
+    float: right;
   }
 
   .search-item {
-    padding: 0 0.5em 0.8em;
-    margin: 0.8em 0;
+    padding: 20px 10px;
     border-bottom: 2px solid $background;
-  }
-
-  .search-stats + .search-item {
-    margin-top: 0em  !important;
   }
 
   .search-item-title {
@@ -102,7 +98,7 @@
 
   .search-item-subtitle {
     font-size: 0.9em;
-    margin-bottom: 0.3em;
+    margin-bottom: 5px; //font-weight: bold;
   }
 
   .highlight {

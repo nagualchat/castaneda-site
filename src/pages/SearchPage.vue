@@ -5,7 +5,7 @@
       <div class="level-left"></div>
 
       <div class="level-right">
-        <a class="level-item invert-link" href="tg://resolve?domain=nagualchat" title="Группа в телеграме">
+        <a class="level-item invert-link" href="https://t.me/nagualchat" target="_blank" title="Группа в телеграме">
           <b-icon pack="fab" icon="telegram" size="is-medium"></b-icon>
         </a>
 
