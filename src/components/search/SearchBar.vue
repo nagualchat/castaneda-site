@@ -20,7 +20,7 @@
           <a class="toggle-icon icon invert-link is-borderless" title="Подключить/отключить все" @click="selectAll"><b-icon icon="check-circle-outline"></b-icon></a>
         </div>
         <b-checkbox-button v-for="(item, index) in libraryList" :key="index"
-          v-model="books" :native-value="item.id" :title="item.ashort + ' — ' + item.title" type="is-accent" size="is-small">
+          v-model="books" :native-value="item.id" :title="item.ashort + ' — ' + item.title" type="is-secondary" size="is-small">
           <span>{{ item.tshort }}</span>
         </b-checkbox-button>
       </b-field>
@@ -28,7 +28,7 @@
 
     <div class="field has-addons">
       <p class="control has-icons-right is-expanded">
-        <input class="input is-medium" type="text" ref="searchInput" v-model="query" @keyup.enter.native="doSearch">
+        <input class="input is-medium" type="text" ref="searchInput" v-model="query" @keyup.enter="doSearch">
         <span class="icon is-small is-right is-clickable" v-show="query">
           <i class="mdi mdi-close" @click="clearInput"></i>
         </span>
@@ -106,6 +106,10 @@
 
 <style lang="scss">
   @import '@/assets/variables.scss';
+
+  .control .toggle-icon {
+    vertical-align: middle;
+  }
 
   .queries-tag {
     font-size: 0.9em !important;

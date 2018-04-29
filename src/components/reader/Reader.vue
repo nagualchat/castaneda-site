@@ -6,17 +6,16 @@
     </div>
 
     <table>
-      <tr v-for="(item, index) in chapterData.paragraphs" :key="index">
+      <tr class="row" v-for="item in chapterData.paragraphs" :key="item.number">
         <td>
-          <div v-if="item.type == 'empty-line'" class="ch-empty-line"></div>
-          <div v-else :id="`p${item.number}`" v-on:mouseover="menuPosition = item.number"
-            :class="[`ch-${item.type}`, highlighted == item.number ? 'ch-hightlight' : null]">
-            {{ item.text }}
-          </div>
+            <div v-if="item.type == 'empty-line'" class="ch-empty-line"></div>
+            <div v-else :id="`p${item.number}`"
+              :class="[`ch-${item.type}`, highlighted == item.number ? 'ch-hightlight' : null]">
+              {{ item.text }}
+            </div>
         </td>
 
-        <td v-if="menuPosition === item.number">
-
+        <td class="hidden-menu">
           <b-dropdown class="is-unselectable">
             <a class="is-borderless icon invert-link is-small" slot="trigger">
               <b-icon icon="arrow-left-thick"></b-icon>
@@ -52,7 +51,6 @@
               </div>
             </b-dropdown-item>
           </b-dropdown>
-
         </td>
       </tr>
     </table>
@@ -72,7 +70,6 @@
         chapterData: null,
 
         highlighted: null,
-        menuPosition: null,
         selectedText: null
       }
     },
@@ -108,9 +105,6 @@
               if (_this.$route.query.p) {
                 VueScrollTo.scrollTo("#p" + _this.$route.query.p, { duration: -1, offset: 0 });
                 _this.highlighted = _this.$route.query.p;
-                _this.menuPosition = parseInt(_this.$route.query.p);
-              } else {
-                _this.menuPosition = parseInt(_this.chapterData.paragraphs[1].number);
               }
 
             }, 1000);
@@ -126,17 +120,18 @@
             copy = config.selfHost + "reader?" + rlink;
             break;
           case "paragraph":
-            copy = item.text + "\n\n" + config.selfHost + "reader?" + rlink;
+            copy = item.text + "\n" + config.selfHost + "reader?" + rlink;
             break;
           case "selected":
-            copy = this.selectedText + "\n\n" + config.selfHost + "reader?" + rlink;
+            copy = this.selectedText + "\n" + config.selfHost + "reader?" + rlink;
             break;
         }
         var _this = this;
         this.$copyText(copy).then(function() {
           _this.$toast.open({
             message: "Скопировано в буфер обмена",
-            position: "is-bottom"
+            position: "is-bottom",
+            type: 'is-secondary'
           })
         })
       },
@@ -147,6 +142,23 @@
 
 <style lang="scss">
   @import '@/assets/variables.scss';
+
+  .hidden-menu {
+    opacity: 0;
+    @include desktop {
+      padding: 0 10px;
+    }
+  }
+
+  .row:hover .hidden-menu {
+    opacity: 1;
+  }
+
+  .hidden-menu .dropdown {
+    vertical-align: middle;
+  }
+
+ /* Стили книжного текста */
 
   .book-title {
     font-size: $size-4;
