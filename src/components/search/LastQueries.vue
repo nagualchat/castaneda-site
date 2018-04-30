@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import api from "@/api/index"
+  import api from '@/api/index';
 
   export default {
     data() {
@@ -40,7 +40,7 @@
         if (str.length < max) {
           return str;
         } else {
-          return str.substr(0, Math.min(str.length, str.lastIndexOf(' '))) + "…"
+          return str.substr(0, Math.min(str.length, str.lastIndexOf(' '))) + '…';
         }
 
       }

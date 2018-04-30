@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from "vuex"
+  import { mapState, mapActions } from 'vuex';
 
   export default {
     data() {
@@ -48,45 +48,45 @@
           return this.$store.state.list.openListId;
         },
         set(value) {
-          this.changeList(value)
+          this.changeList(value);
         }
       }
     },
 
     methods: {
-      ...mapActions(["createList", "changeList"]),
+      ...mapActions(['createList', 'changeList']),
 
       renameDialog(list) {
         this.$dialog.prompt({
-          message: "Введите новое название:",
-          confirmText: "Готово",
-          cancelText: "Отмена",
+          message: 'Введите новое название:',
+          confirmText: 'Готово',
+          cancelText: 'Отмена',
           inputAttrs: {
             value: list.name,
             maxlength: 30
           },
-          onConfirm: (value) => this.$store.dispatch("renameList", { id: list.id, name: value })
+          onConfirm: (value) => this.$store.dispatch('renameList', { id: list.id, name: value })
         })
       },
 
       deleteDialog(list) {
         this.$dialog.confirm({
-          title: "Удаление",
-          message: "Вы уверены, что хотите удалить список? Это действие нельзя отменить.",
-          confirmText: "Удалить",
-          cancelText: "Отмена",
-          type: "is-danger",
+          title: 'Удаление',
+          message: 'Вы уверены, что хотите удалить список? Это действие нельзя отменить.',
+          confirmText: 'Удалить',
+          cancelText: 'Отмена',
+          type: 'is-danger',
           hasIcon: true,
-          onConfirm: () => this.$store.dispatch("deleteList", list.id)
+          onConfirm: () => this.$store.dispatch('deleteList', list.id)
         })
       },
 
       exportFile(list) {
-        this.$store.dispatch("exportList", list.id)
+        this.$store.dispatch('exportList', list.id);
       },
 
       importFile() {
-        this.$store.dispatch("importList", this.file[0])
+        this.$store.dispatch('importList', this.file[0]);
       },
 
     }

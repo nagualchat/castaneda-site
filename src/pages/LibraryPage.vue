@@ -23,10 +23,18 @@
 </template>
 
 <script>
-  import TabOne from "@/pages/library-tabs/TabOne"
-  import TabTwo from "@/pages/library-tabs/TabTwo"
+  import TabOne from "@/pages/library-tabs/TabOne";
+  import TabTwo from "@/pages/library-tabs/TabTwo";
 
   export default {
+    name: 'LibraryPage',
+    metaInfo: {
+      title: 'Библиотека',
+      meta: [
+        { vmid: 'description', name: 'description', content: 'Подборка книг, интервью и лекций Карлоса Кастанеды, Тайши Абеляр и Флоринды Доннер, а также других материалов, которые могут быть интересны изучающим путь знания толтеков.' }
+      ]
+    },
+
     components: {
       TabOne,
       TabTwo
@@ -36,17 +44,12 @@
       return {
         activeTab: 0
       }
-    },
-
-    created: function() {
-      document.title = "Библиотека"
-    },
+    }
   }
 </script>
 
 <style lang="scss">
   @import '@/assets/variables.scss';
-
   #library h1.title {
     margin-bottom: 0px !important;
   }
@@ -57,7 +60,7 @@
   }
 
   #library table {
-    margin-top: 0.8em ;
+    margin-top: 0.8em;
   }
 
   #library table tr td:last-child {

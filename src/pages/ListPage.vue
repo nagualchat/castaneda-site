@@ -55,14 +55,21 @@
 </template>
 
 <script>
-  import Tree from "@/components/list/Tree";
-  import Hotkeys from "@/components/list/Hotkeys";
-  import DebugPanel from "@/components/list/DebugPanel";
-  import ListsModal from "@/components/list/ListsModal";
-  import { mapState, mapActions, mapGetters } from "vuex"
+  import Tree from '@/components/list/Tree';
+  import Hotkeys from '@/components/list/Hotkeys';
+  import DebugPanel from '@/components/list/DebugPanel';
+  import ListsModal from '@/components/list/ListsModal';
+  import { mapState, mapActions, mapGetters } from 'vuex';
 
   export default {
-    name: "MainPage",
+    name: 'MainPage',
+
+    metaInfo: {
+      title: 'Список перепросмотра',
+      meta: [
+        { vmid: 'description', name: 'description', content: 'Приложение, призванное облегчить задачу составления списка перепросмотра.' }
+      ]
+    },
 
     components: {
       Tree,
@@ -85,18 +92,17 @@
         isShowStartNotify: state => state.list.isShowStartNotify,
         isShowDeleteSnack: state => state.list.isShowDeleteSnack,
       }),
-      ...mapGetters(["itemsInList", "createdDate"])
+      ...mapGetters(['itemsInList', 'createdDate'])
     },
 
     created() {
-      this.$store.dispatch("initList")
-      document.title = "Список перепросмотра"
+      this.$store.dispatch('initList')
     },
 
     watch: {
       isShowDeleteSnack: {
         handler: function() {
-          this.deleteSnackbar()
+          this.deleteSnackbar();
         }
       }
     },
@@ -111,7 +117,7 @@
           actionText: 'ОТМЕНА',
           queue: false,
           onAction: () => {
-            console.log("ON")
+            console.log('ON')
           }
         })
       }
@@ -120,7 +126,7 @@
     directives: {
       focus: {
         inserted: function(el) {
-          el.focus()
+          el.focus();
         }
       }
     }
@@ -129,7 +135,6 @@
 
 <style lang="scss">
   @import '@/assets/variables.scss';
-
   .notify {
     font-size: 0.9em;
     color: desaturate(darken($primary, colorLuminance($primary) * 70%), colorLuminance($primary) * 30%);

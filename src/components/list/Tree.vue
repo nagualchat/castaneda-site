@@ -9,12 +9,12 @@
 </template>
 
 <script>
-  import Draggable from "vuedraggable";
-  import TreeItem from "@/components/list/TreeItem"
+  import Draggable from 'vuedraggable';
+  import TreeItem from '@/components/list/TreeItem';
 
   export default {
-    name: "tree",
-    props: ["treeData"],
+    name: 'tree',
+    props: ['treeData'],
 
     components: {
       Draggable,
@@ -24,7 +24,7 @@
     watch: {
       treeData: {
         handler: function() {
-          this.$store.dispatch("saveList")
+          this.$store.dispatch('saveList');
         },
         deep: true
       }

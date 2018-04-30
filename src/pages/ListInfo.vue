@@ -29,11 +29,16 @@
 </template>
 
 <script>
-  import AppInfo from "@/pages/info-tabs/AppInfo"
-  import TabOne from "@/pages/info-tabs/TabOne"
-  import TabTwo from "@/pages/info-tabs/TabTwo"
+  import AppInfo from '@/pages/info-tabs/AppInfo';
+  import TabOne from '@/pages/info-tabs/TabOne';
+  import TabTwo from '@/pages/info-tabs/TabTwo';
 
   export default {
+    name: 'ListInfo',
+    metaInfo: {
+      title: 'Справка по перепросмору'
+    },
+
     components: {
       AppInfo,
       TabOne,
@@ -44,11 +49,7 @@
       return {
         activeTab: 0
       }
-    },
-
-    created: function() {
-      document.title = "Справка по списку"
-    },
+    }
   }
 </script>
 

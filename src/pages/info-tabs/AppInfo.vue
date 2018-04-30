@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import BookQuote from "@/components/BookQuote.vue";
+  import BookQuote from '@/components/BookQuote.vue';
 
   export default {
     components: {

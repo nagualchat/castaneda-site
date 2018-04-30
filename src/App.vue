@@ -11,12 +11,23 @@
 </template>
 
 <script>
-  import Navbar from "@/components/Navbar";
+  import Navbar from '@/components/Navbar';
 
   export default {
-    name: "App",
+    name: 'App',
+
+    metaInfo: {
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { vmid: 'description', name: 'description', content: 'Инструменты, облегчающие изучение пути знания толтеков, изложенного в текстах Карлоса Кастанеды: полнотекстовый поиск по книгам, цитирование фрагмента с обратной ссылкой на главу, приложение для составления списка перепросмотра.' }
+      ],
+      title: 'Главная',
+      titleTemplate: '%s — Путь знания'
+    },
+
     components: {
-      "app-navbar": Navbar,
+      'app-navbar': Navbar,
     },
 
     computed: {
@@ -28,16 +39,15 @@
 </script>
 
 <style lang="scss">
-  @import "./assets/variables.scss";
+  @import './assets/variables.scss';
   .dark {
-    @import "./assets/dark/variables.scss";
-    @import "./assets/dark/overrides.scss";
+    @import './assets/dark/variables.scss';
+    @import './assets/dark/overrides.scss';
   }
 
-  @import "~bulma";
-  @import "~buefy/src/scss/buefy";
-  @import "./assets/main.scss";
-
+  @import '~bulma';
+  @import '~buefy/src/scss/buefy';
+  @import './assets/main.scss';
   .is-fullheight {
     min-height: 90vh;
   }

@@ -10,8 +10,8 @@
 </template>
 
 <script>
-  import { mapState } from "vuex"
-  import config from "@/config"
+  import { mapState } from 'vuex';
+  import config from '@/config';
 
   export default {
     name: 'BookQuote',
@@ -28,12 +28,12 @@
       },
 
       title: function() {
-        let index = this.books.map((el) => el.id).indexOf(this.decode[1])
-        return this.books[index].author + ": " + this.books[index].title
+        let index = this.books.map((el) => el.id).indexOf(this.decode[1]);
+        return this.books[index].author + ': ' + this.books[index].title;
       },
 
       url: function() {
-        return "/reader?book=" + this.decode[1] + "&ch=" + this.decode[2] + "&p=" + this.decode[3]
+        return '/reader?book=' + this.decode[1] + '&ch=' + this.decode[2] + '&p=' + this.decode[3];
       }
     }
   }

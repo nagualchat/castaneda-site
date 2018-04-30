@@ -7,7 +7,7 @@
           <reader-toc/>
         </b-modal>
 
-        <reader @openToc="isShowTOC = true"/>
+        <reader @openToc="isShowTOC = true" @updatetitle="bookTitle = $event"/>
         <reader-footer @openToc="isShowTOC = true"/>
 
       </div>
@@ -16,12 +16,14 @@
 </template>
 
 <script>
-  import Reader from "@/components/reader/Reader";
-  import ReaderFooter from "@/components/reader/ReaderFooter";
-  import ReaderToc from "@/components/reader/ReaderToc";
-  import api from "@/api/index"
+  import Reader from '@/components/reader/Reader';
+  import ReaderFooter from '@/components/reader/ReaderFooter';
+  import ReaderToc from '@/components/reader/ReaderToc';
+  import api from '@/api/index';
 
   export default {
+    name: 'ReaderPage',
+
     components: {
       Reader,
       ReaderFooter,
@@ -30,7 +32,14 @@
 
     data() {
       return {
+        bookTitle: null,
         isShowTOC: false,
+      }
+    },
+
+    metaInfo() {
+      return {
+        title: !this.bookTitle ? 'Библиотека' : this.bookTitle,
       }
     }
   }

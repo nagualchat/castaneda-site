@@ -55,7 +55,7 @@
 
 <script>
   export default {
-    name: "Navbar",
+
     data() {
       return {
         isMenuOpen: false,
@@ -68,7 +68,7 @@
           return this.$store.state.list.isDebug;
         },
         set(value) {
-          this.$store.commit("SET_DEBUG_MODE", value)
+          this.$store.commit('SET_DEBUG_MODE', value);
         }
       },
 
@@ -77,7 +77,7 @@
           return this.$store.state.main.isDarkTheme;
         },
         set(value) {
-          this.$store.commit("SET_DARK_THEME", value)
+          this.$store.commit('SET_DARK_THEME', value);
         }
       }
     },
@@ -85,9 +85,9 @@
     methods: {
       isHidden(page) {
         if (/list/i.test(this.$route.path) != true) {
-          return "is-hidden"
+          return 'is-hidden';
         }
-        return ""
+        return '';
       }
     }
   }

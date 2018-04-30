@@ -5,22 +5,22 @@
 </template>
 
 <script>
-  import { mapState, mapMutations, mapActions } from "vuex"
+  import { mapState, mapMutations, mapActions } from 'vuex';
 
   export default {
-    name: "hotkeys",
+    name: 'hotkeys',
 
     data() {
       return {
         shortcuts: {
-          up: ["arrowup"],
-          down: ["arrowdown"],
-          left: ["arrowleft"],
-          right: ["arrowright"],
-          enter: ["enter"],
-          rename: ["f2"],
-          tab: ["tab"],
-          delete: ["del"]
+          up: ['arrowup'],
+          down: ['arrowdown'],
+          left: ['arrowleft'],
+          right: ['arrowright'],
+          enter: ['enter'],
+          rename: ['f2'],
+          tab: ['tab'],
+          delete: ['del']
         }
       }
     },
@@ -36,65 +36,65 @@
     },
 
     methods: {
-      ...mapMutations(["SET_SELECTED_ITEM", "TOGGLE_ADD_MODE", "TOGGLE_EDIT_MODE", "DELETE_ITEM", "TOGGLE_EXPAND", "SET_EXPAND"]),
-      ...mapActions(["initList", "addDone", "addCancel", "editItem", "editDone", "editCancel", "selectUp", "selectDown", "removeItem"]),
+      ...mapMutations(['SET_SELECTED_ITEM', 'TOGGLE_ADD_MODE', 'TOGGLE_EDIT_MODE', 'DELETE_ITEM', 'TOGGLE_EXPAND', 'SET_EXPAND']),
+      ...mapActions(['initList', 'addDone', 'addCancel', 'editItem', 'editDone', 'editCancel', 'selectUp', 'selectDown', 'removeItem']),
 
       keyPress: function(event) {
         switch (event.srcKey) {
-          case "up": // Выделение вверх
+          case 'up': // Выделение вверх
             {
-              this.selectUp()
-              break
+              this.selectUp();
+              break;
             }
-          case "down": // Выделение вниз
+          case 'down': // Выделение вниз
             {
-              this.selectDown()
-              break
+              this.selectDown();
+              break;
             }
-          case "left": // Левая стрелка сворачивает ветвь
-            {
-              if (!this.addMode && !this.editMode) {
-                this.SET_EXPAND(false)
-              }
-              break
-            }
-          case "right": // Правая стрелка разворачивает
+          case 'left': // Левая стрелка сворачивает ветвь
             {
               if (!this.addMode && !this.editMode) {
-                this.SET_EXPAND(true)
+                this.SET_EXPAND(false);
               }
-              break
+              break;
             }
-          case "enter": // Enter запускает добавление нового элемента
+          case 'right': // Правая стрелка разворачивает
+            {
+              if (!this.addMode && !this.editMode) {
+                this.SET_EXPAND(true);
+              }
+              break;
+            }
+          case 'enter': // Enter запускает добавление нового элемента
             {
               //if (!this.addMode)
               //   this.addDone(this.selectedItem)
               // } else if (!this.editMode) {
-              this.TOGGLE_ADD_MODE(true)
+              this.TOGGLE_ADD_MODE(true);
               // } else {
               //   this.editDone(this.selectedItem)
               // }
-              break
+              break;
             }
-          case "rename": // F2 запускает или отменяет переименование
+          case 'rename': // F2 запускает или отменяет переименование
             {
               if (!this.editMode) {
-                this.editItem(this.selectedItem)
+                this.editItem(this.selectedItem);
               } else {
-                this.TOGGLE_EDIT_MODE(false)
+                this.TOGGLE_EDIT_MODE(false);
               }
-              break
+              break;
             }
-          case "delete": // Удаление выделенного
+          case 'delete': // Удаление выделенного
             {
-              this.removeItem()
-              this.selectDown()
-              break
+              this.removeItem();
+              this.selectDown();
+              break;
             }
-          case "tab":
+          case 'tab':
             {
-              this.selectDown()
-              break
+              this.selectDown();
+              break;
             }
         }
       }

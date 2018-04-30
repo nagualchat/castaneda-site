@@ -59,11 +59,12 @@
 </template>
 
 <script>
-  import VueScrollTo from "vue-scrollto"
-  import api from "@/api/index"
-  import config from "@/config.js"
+  import VueScrollTo from 'vue-scrollto';
+  import api from '@/api/index';
+  import config from '@/config.js';
 
   export default {
+    name: 'Reader',
     data() {
       return {
         isLoading: true,
@@ -76,14 +77,14 @@
 
     created() {
       this.loadChapter();
-      document.addEventListener("selectionchange", () => {
+      document.addEventListener('selectionchange', () => {
         var selection = window.getSelection();
         this.selectedText = selection.toString();
       })
     },
 
     watch: {
-      "$route" () {
+      '$route' () {
         this.loadChapter();
       }
     },
@@ -95,18 +96,18 @@
 
         api.getChapter(this.$route.query.book, this.$route.query.ch).then((result) => {
           this.chapterData = result.data;
-          document.title = result.data.book.title;
+          this.$emit('updatetitle', result.data.book.title);
 
           this.$nextTick(() => {
+            console.log(this.chapterData.book.title)
+            loadingComponent.close();
             var _this = this;
             setTimeout(function() {
-
-              loadingComponent.close();
+              this.isLoading = false;
               if (_this.$route.query.p) {
-                VueScrollTo.scrollTo("#p" + _this.$route.query.p, { duration: -1, offset: 0 });
+                VueScrollTo.scrollTo('#p' + _this.$route.query.p, { duration: -1, offset: 0 });
                 _this.highlighted = _this.$route.query.p;
               }
-
             }, 1000);
           })
         })
@@ -114,23 +115,23 @@
 
       doCopy: function(item, mode) {
         var copy;
-        var rlink = "book=" + this.chapterData.book.id + "&ch=" + this.chapterData.chapter.id + "&p=" + item.number;
+        var rlink = 'book=' + this.chapterData.book.id + '&ch=' + this.chapterData.chapter.id + '&p=' + item.number;
         switch (mode) {
-          case "link":
-            copy = config.selfHost + "reader?" + rlink;
+          case 'link':
+            copy = config.selfHost + 'reader?' + rlink;
             break;
-          case "paragraph":
-            copy = item.text + "\n" + config.selfHost + "reader?" + rlink;
+          case 'paragraph':
+            copy = item.text + '\n' + config.selfHost + 'reader?' + rlink;
             break;
-          case "selected":
-            copy = this.selectedText + "\n" + config.selfHost + "reader?" + rlink;
+          case 'selected':
+            copy = this.selectedText + '\n' + config.selfHost + 'reader?' + rlink;
             break;
         }
         var _this = this;
         this.$copyText(copy).then(function() {
           _this.$toast.open({
-            message: "Скопировано в буфер обмена",
-            position: "is-bottom",
+            message: 'Скопировано в буфер обмена',
+            position: 'is-bottom',
             type: 'is-secondary'
           })
         })
@@ -142,7 +143,6 @@
 
 <style lang="scss">
   @import '@/assets/variables.scss';
-
   .hidden-menu {
     opacity: 0;
     @include desktop {
@@ -158,7 +158,7 @@
     vertical-align: middle;
   }
 
- /* Стили книжного текста */
+  /* Стили книжного текста */
 
   .book-title {
     font-size: $size-4;

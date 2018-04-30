@@ -10,7 +10,7 @@
 
       <input type="text" v-if="editMode && selectedItem == item.id" v-model="editName" v-shortkey.avoid v-focus @keyup.enter="editDone()" @keyup.esc="editCancel()" @blur="editCancel()">
 
-      <span v-else>{{ showName(item.id) }}</span>
+      <span v-else>{{ item.name }}</span>
 
       <span class="element-menu" v-if="editMode && selectedItem == item.id">
         <span @click="doneRename(item)">
@@ -65,11 +65,11 @@
 </template>
 
 <script>
-  import { mapState, mapMutations, mapActions } from "vuex"
+  import { mapState, mapMutations, mapActions } from 'vuex';
 
   export default {
-    name: "tree-item",
-    props: ["item"],
+    name: 'tree-item',
+    props: ['item'],
 
     computed: {
       ...mapState({
@@ -84,7 +84,7 @@
           return this.$store.state.list.addName;
         },
         set(value) {
-          this.$store.commit("SET_ADD_NAME", value)
+          this.$store.commit('SET_ADD_NAME', value)
         }
       },
 
@@ -93,16 +93,17 @@
           return this.$store.state.list.editName;
         },
         set(value) {
-          this.$store.commit("SET_EDIT_NAME", value)
+          this.$store.commit('SET_EDIT_NAME', value)
         }
       },
     },
 
     methods: {
-      ...mapMutations(["SET_SELECTED_ITEM", "TOGGLE_ADD_MODE", "TOGGLE_EDIT_MODE", "DELETE_ITEM", "TOGGLE_EXPAND"]),
-      ...mapActions(["createLink", "addDone", "addCancel", "editItem", "editDone", "editCancel"]),
+      ...mapMutations(['SET_SELECTED_ITEM', 'TOGGLE_ADD_MODE', 'TOGGLE_EDIT_MODE', 'DELETE_ITEM', 'TOGGLE_EXPAND']),
+      ...mapActions(['createLink', 'addDone', 'addCancel', 'editItem', 'editDone', 'editCancel']),
 
       showName: function(id) {
+        console.log("show")
         return this.flatTree.find(x => x.id === id).name;
       }
     }

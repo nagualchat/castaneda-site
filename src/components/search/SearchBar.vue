@@ -44,27 +44,27 @@
 </template>
 
 <script>
-  import SearchHelp from "@/components/search/SearchHelp";
+  import SearchHelp from '@/components/search/SearchHelp';
 
   export default {
     components: {
       SearchHelp
     },
 
-    props: ["inputQuery", "inputBooks"],
+    props: ['inputQuery', 'inputBooks'],
 
     data() {
       return {
         isOptionsOpen: false,
         isHelpShow: false,
         query: this.inputQuery,
-        books: this.inputBooks || ["cc1c", "cc2c", "cc3n", "cc4n", "cc5n", "cc6n", "cc7n", "cc8n", "cc9n", "cc10s", "cc11s", "taisha", "florinda"],
+        books: this.inputBooks || ['cc1c', 'cc2c', 'cc3n', 'cc4n', 'cc5n', 'cc6n', 'cc7n', 'cc8n', 'cc9n', 'cc10s', 'cc11s', 'taisha', 'florinda'],
       }
     },
 
     computed: {
       libraryList() {
-        return this.$store.state.main.books
+        return this.$store.state.main.books;
       }
     },
 
@@ -80,7 +80,7 @@
 
     methods: {
       clearInput: function() {
-        this.query = "";
+        this.query = '';
         this.$refs.searchInput.focus();
       },
 
@@ -96,7 +96,7 @@
 
       doSearch: function() {
         if (this.query) {
-          this.$router.push({ path: "search", query: { query: this.query.trim(), books: this.books.join(",") } });
+          this.$router.push({ path: 'search', query: { query: this.query.trim(), books: this.books.join(',') } });
         }
       }
     }

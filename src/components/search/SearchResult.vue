@@ -21,15 +21,15 @@
 </template>
 
 <script>
-  import InfiniteLoading from "vue-infinite-loading";
-  import api from "@/api/index"
+  import InfiniteLoading from 'vue-infinite-loading';
+  import api from '@/api/index';
 
   export default {
     components: {
       InfiniteLoading
     },
 
-    props: ["query", "books"],
+    props: ['query', 'books'],
 
     data() {
       return {
@@ -53,15 +53,15 @@
 
         if (!this.query) return;
         this.$nextTick(() => {
-          this.$refs.infiniteLoading.$emit("$InfiniteLoading:reset");
+          this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
           this.$refs.infiniteLoading.attemptLoad();
         })
       },
 
       infiniteHandler: function($state) {
-        api.search(this.query, this.books.join(","), this.offset).then((result) => {
+        api.search(this.query, this.books.join(','), this.offset).then((result) => {
           this.results = this.results.concat(result.data.hits.hits);
-          this.total = result.data.hits.total
+          this.total = result.data.hits.total;
 
           if (this.offset < this.total) {
             $state.loaded();

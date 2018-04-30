@@ -34,11 +34,16 @@
 </template>
 
 <script>
-  import SearchBar from "@/components/search/SearchBar"
-  import SearchResult from "@/components/search/SearchResult"
-  import LastQueries from "@/components/search/LastQueries"
+  import SearchBar from '@/components/search/SearchBar';
+  import SearchResult from '@/components/search/SearchResult';
+  import LastQueries from '@/components/search/LastQueries';
 
   export default {
+    name: 'SearchPage',
+    metaInfo: {
+      title: 'Поиск по книгам'
+    },
+
     components: {
       SearchBar,
       SearchResult,
@@ -54,14 +59,13 @@
 
     created: function() {
       if (this.$route.query.query) this.query = this.$route.query.query;
-      if (this.$route.query.books) this.books = this.$route.query.books.split(",");
-      document.title = "Поиск";
+      if (this.$route.query.books) this.books = this.$route.query.books.split(',');
     },
 
     watch: {
       '$route' (to, from) {
         to.query.query ? this.query = to.query.query : this.query = undefined;
-        to.query.books ? this.books = to.query.books.split(",") : null;
+        to.query.books ? this.books = to.query.books.split(',') : null;
       }
     },
 
