@@ -1,10 +1,4 @@
-function findLink(array, id) {
-  for (var item of array) {
-    if (item.id === id) return item
-    var result = findLink(item.children, id)
-    if (result) return result
-  }
-}
+import utils from './utils';
 
 export default {
 
@@ -35,17 +29,21 @@ export default {
   },
 
   RENAME_ITEM(state, payload) {
-    function findNode(tree, id) {
+    var node = utils.getNode(state.openList.tree, payload);
+    node.name = state.editName;
+
+
+    function renameLinks(tree, id) {
       for (let i = 0; i < tree.length; ++i) {
-        if (tree[i].id === id) {
+        if (tree[i].link === id) {
           tree[i].name = state.editName;
-          break;
         } else {
-          findNode(tree[i].children, id);
+          renameLinks(tree[i].children, id);
         }
       }
     }
-    findNode(state.openList.tree, payload);
+
+    renameLinks(state.openList.tree, payload);
   },
 
   TOGGLE_ADD_MODE(state, payload) {
@@ -57,33 +55,16 @@ export default {
   },
 
   ADD_NEW_ITEM(state, payload) {
-    function findNode(tree, id, add) {
-      for (let i = 0; i < tree.length; ++i) {
-        if (tree[i].id === id) {
-          tree.splice(i + 1, 0, add);
-          break;
-        } else {
-          findNode(tree[i].children, id, add);
-        }
-      }
-    }
-    findNode(state.openList.tree, payload.id, payload.add);
+    var parent = utils.getParent(state.openList.tree, payload.id);
+    var index = utils.getIndex(parent.children, payload.id);
+    parent.children.splice(index+1, 0, payload.add);
   },
 
-  // SAVE_DELETED_ITEM(state, payload) {
-  //   state.deleted = payload;
-  // },
 
   DELETE_ITEM(state, payload) {
-    function delLinks(tree, id) {
-      for (let i = 0; i < tree.length; ++i) {
-        if (tree[i].link === id) {
-          tree.splice(i, 1);
-        } else {
-          delLinks(tree[i].children, id);
-        }
-      }
-    }
+    var parent = utils.getParent(state.openList.tree, payload);
+    var index = utils.getIndex(parent.children, payload);
+    parent.children.splice(index, 1);
 
     function delItem(tree, id) {
       for (let i = 0; i < tree.length; ++i) {
@@ -95,59 +76,45 @@ export default {
         }
       }
     }
-
-    delLinks(state.openList.tree, payload);
-    delItem(state.openList.tree, payload);
-  },
-
-  TOGGLE_EXPAND(state, payload) {
-    function findItem(tree, payload) {
-      for (let i = 0; i < tree.length; ++i) {
-        if (tree[i].id === payload) {
-          tree[i].expand = !tree[i].expand;
-          break;
-        } else {
-          findItem(tree[i].children, payload);
-        }
-      }
-    }
-    findItem(state.openList.tree, payload);
+    //delLinks(state.openList.tree, payload);
   },
 
   SET_EXPAND(state, payload) {
-    function findItem(tree, id, stat) {
-      for (let i = 0; i < tree.length; ++i) {
-        if (tree[i].id === id) {
-          if (tree[i].children.length > 0) tree[i].expand = stat;
-          break;
-        } else {
-          findItem(tree[i].children, id, stat);
-        }
-      }
+    if (payload.id) {
+      var found = utils.getNode(state.openList.tree, payload.id);
+      found.expand = !found.expand;
+
+    } else {
+      var found = utils.getNode(state.openList.tree, state.selectedItem);
+      found.expand = payload.state;
     }
-    //console.log(payload)
-    findItem(state.openList.tree, state.selectedItem, payload);
   },
 
-  // Расскладывает дерево в плоский массив (заодно обрабатывает найденные ссылки)
+  SET_ITEM_COLOR(state, payload) {
+    var found = utils.getNode(state.openList.tree, state.selectedItem);
+    if (!found.link) {
+      found.color = parseInt(payload);
+    }
+  },
+
+  TOGGLE_COMPLETE(state, payload) {
+    var found = utils.getNode(state.openList.tree, state.selectedItem);
+    if (!found.link) {
+      found.complete = !found.complete;
+    }
+  },
+
+  // Расскладывает дерево в плоский массив
   COMPILE_FLAT_TREE(state) {
-    state.flatTree = []
+    state.flatTree = [];
 
-    function findItemID(array, parent, exp) {
-      var expanded;
+    function findItemID(array, parent, depth) {
       for (var item of array) {
-        if (item.expand === false) expanded = 'false';
-
-        if (item.link) {
-          let linked = findLink(state.openList.tree, item.link);
-          state.flatTree.push({ id: item.id, name: linked.name, expand: item.expand, parent });
-        } else {
-          state.flatTree.push({ id: item.id, name: item.name, expand: item.expand, parent });
-        }
-        findItemID(item.children, item.id, item.expand);
+        state.flatTree.push({ id: item.id, name: item.name, expand: item.expand, depth: depth || 0, parent });
+        findItemID(item.children, item.id, (depth || 0) + 1);
       }
     }
-    findItemID(state.openList.tree);
+    findItemID(state.openList.tree, 'root');
   },
 
   /*    ====   Списки  ====    */

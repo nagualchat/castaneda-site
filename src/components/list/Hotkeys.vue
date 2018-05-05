@@ -15,12 +15,18 @@
         shortcuts: {
           up: ['arrowup'],
           down: ['arrowdown'],
-          left: ['arrowleft'],
-          right: ['arrowright'],
+          collapse: ['arrowleft'],
+          expand: ['arrowright'],
           enter: ['enter'],
           rename: ['f2'],
-          tab: ['tab'],
-          delete: ['del']
+          indent: ['tab'],
+          unindent: ['shift', 'tab'],
+          complete: ['-'],
+          delete: ['del'],
+          color_1: ['1'],
+          color_2: ['2'],
+          color_3: ['3'],
+          color_0: ['0'],
         }
       }
     },
@@ -36,36 +42,37 @@
     },
 
     methods: {
-      ...mapMutations(['SET_SELECTED_ITEM', 'TOGGLE_ADD_MODE', 'TOGGLE_EDIT_MODE', 'DELETE_ITEM', 'TOGGLE_EXPAND', 'SET_EXPAND']),
-      ...mapActions(['initList', 'addDone', 'addCancel', 'editItem', 'editDone', 'editCancel', 'selectUp', 'selectDown', 'removeItem']),
+      ...mapMutations(['SET_SELECTED_ITEM', 'TOGGLE_ADD_MODE', 'TOGGLE_EDIT_MODE', 'DELETE_ITEM', 'SET_EXPAND', 'TOGGLE_COMPLETE', 'SET_ITEM_COLOR']),
+      ...mapActions(['initList', 'addDone', 'addCancel', 'editItem', 'editDone', 'editCancel', 'selectUp', 'selectDown', 'indentItem', 'unindentItem', 'removeItem']),
 
       keyPress: function(event) {
         switch (event.srcKey) {
-          case 'up': // Выделение вверх
+
+          case 'up':
             {
               this.selectUp();
               break;
             }
-          case 'down': // Выделение вниз
+          case 'down':
             {
               this.selectDown();
               break;
             }
-          case 'left': // Левая стрелка сворачивает ветвь
+          case 'collapse':
             {
               if (!this.addMode && !this.editMode) {
-                this.SET_EXPAND(false);
+                this.SET_EXPAND({id: null, state: false });
               }
               break;
             }
-          case 'right': // Правая стрелка разворачивает
+          case 'expand':
             {
               if (!this.addMode && !this.editMode) {
-                this.SET_EXPAND(true);
+                this.SET_EXPAND({id: null, state: true });
               }
               break;
             }
-          case 'enter': // Enter запускает добавление нового элемента
+          case 'enter':
             {
               //if (!this.addMode)
               //   this.addDone(this.selectedItem)
@@ -76,7 +83,7 @@
               // }
               break;
             }
-          case 'rename': // F2 запускает или отменяет переименование
+          case 'rename':
             {
               if (!this.editMode) {
                 this.editItem(this.selectedItem);
@@ -85,15 +92,32 @@
               }
               break;
             }
-          case 'delete': // Удаление выделенного
+
+          case 'delete':
             {
               this.removeItem();
               this.selectDown();
               break;
             }
-          case 'tab':
+          case 'indent':
             {
-              this.selectDown();
+              this.indentItem();
+              break;
+            }
+          case 'unindent':
+            {
+              this.unindentItem();
+              break;
+            }
+          case 'complete':
+            {
+              this.TOGGLE_COMPLETE();
+              break;
+            }
+          case /color_/.test(event.srcKey) && event.srcKey:
+            {
+              var colorId = event.srcKey.match(/color_(.*)/i);
+              this.SET_ITEM_COLOR(colorId[1]);
               break;
             }
         }

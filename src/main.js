@@ -12,7 +12,7 @@ Vue.use(VueShortkey);
 Vue.use(VueScrollTo);
 Vue.use(VueClipboard);
 
-Vue.use('vue-shortkey', { prevent: ['input', 'textarea'] });
+//Vue.use('vue-shortkey', { prevent: ['input', 'textarea'] });
 
 Vue.directive('focus', {
   inserted: function (el) {

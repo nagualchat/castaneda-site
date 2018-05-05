@@ -24,10 +24,12 @@
                     <span>{{ itemsInList }}</span>
                   </a>
                   <b-dropdown-item custom>
-                    <div class="list-header-info">
-                      <span>Создан:</span>
-                      <span>{{ createdDate }}</span>
+
+                    <div class="level is-mobile list-stat">
+                      <div class="level-item">Создан</div>
+                      <div class="level-item">{{ createdDate }}</div>
                     </div>
+
                   </b-dropdown-item>
                 </b-dropdown>
               </div>
@@ -45,7 +47,7 @@
             <lists-modal />
           </b-modal>
 
-          <tree class="tree" :treeData="openList.tree" />
+          <tree :treeData="openList.tree" />
           <debug-panel @clear="сlearStorage()" v-show="isDebug" />
 
         </div>
@@ -152,13 +154,9 @@
     padding: 0.5em 1em;
   }
 
-  .tree-header-info {
-    min-width: 250px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .tree {
-    margin-right: 16px;
+  .list-stat {
+    @include desktop {
+      width: 300px;
+    }
   }
 </style>

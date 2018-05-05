@@ -3,12 +3,14 @@
     <div class="columns is-centered">
       <div class="column is-narrow">
         <br>
-        <a class="button is-primary">Primary</a>
-        <a class="button is-secondary">Dark</a>
-        <a class="button is-info">Info</a>
-        <a class="button is-success">Success</a>
-        <a class="button is-warning">Warning</a>
-        <a class="button is-danger">Danger</a>
+        <div class="level is-mobile example">
+          <a class="level-item button is-primary">*</a>
+          <a class="level-item button is-secondary">*</a>
+          <a class="level-item button is-info">*</a>
+          <a class="level-item button is-success">*</a>
+          <a class="level-item button is-warning">*</a>
+          <a class="level-item button is-danger">*</a>
+        </div>
       </div>
     </div>
     <pre>selectedItem = {{ selectedItem }}</pre>
@@ -35,3 +37,9 @@
 
   }
 </script>
+
+<style lang="scss">
+  .example > a {
+    width: 2.25em;
+  }
+</style>

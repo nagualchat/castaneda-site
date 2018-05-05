@@ -1,5 +1,7 @@
 import uuid from 'uuid/v4';
+import moment from 'moment';
 import localforage from 'localforage';
+import utils from './utils';
 
 localforage.config({
   name: 'recapitulation-list',
@@ -10,56 +12,95 @@ export default {
 
   /*    ====   Дерево  ====    */
 
-  // Перемещение выделения вверх и вниз
-  // Ухищрения нужны чтобы корректно обрабатывались свёрнутые ветви
+  // Перемещение выделения вверх
+  // Требует доработки: при разнице в 2 и больше уровней заходит в свёрнутые ноды
   selectUp({ state, commit }) {
-    let index = state.flatTree.map((el) => el.id).indexOf(state.selectedItem);
-    let prev = state.flatTree[index - 1];
+    var index = state.flatTree.map((el) => el.id).indexOf(state.selectedItem);
+    if (index == 0) return;
+    var prev = state.flatTree[index - 1];
 
-    if (prev && prev.parent) {
-      let prevParent = state.flatTree.find(x => x.id === prev.parent);
-      if (prevParent.expand === false) {
-        if (index - 1 > 0) commit('SET_SELECTED_ITEM', prevParent.id);
+    var prevParent = state.flatTree.find(x => x.id === prev.parent);
+    if (prevParent) {
+      if (!prevParent.expand) {
+        commit('SET_SELECTED_ITEM', prevParent.id);
       } else {
-        if (index - 1 > 0) commit('SET_SELECTED_ITEM', prev.id);
+        commit('SET_SELECTED_ITEM', prev.id);
       }
     } else {
-      if (index > 0) commit('SET_SELECTED_ITEM', prev.id);
+      commit('SET_SELECTED_ITEM', prev.id);
     }
-
   },
 
+  // Перемещение выделения вниз
   selectDown({ state, commit }) {
-    let index = state.flatTree.map((el) => el.id).indexOf(state.selectedItem);
-    let selected = state.flatTree[index];
-    let next = state.flatTree[index + 1];
+    var index = state.flatTree.map((el) => el.id).indexOf(state.selectedItem);
+    var current = state.flatTree[index];
 
-    if (selected.expand === false) {
-      for (let i = index + 1; i < state.flatTree.length; ++i) {
-        if (!state.flatTree[i].parent) {
+    if (!current.expand) {
+      for (var i = index + 1; i < state.flatTree.length; ++i) {
+        if (state.flatTree[i].depth <= current.depth) {
           commit('SET_SELECTED_ITEM', state.flatTree[i].id);
           break;
         }
       }
     } else {
-      if (index + 1 < state.flatTree.length) {
-        commit('SET_SELECTED_ITEM', next.id);
-      }
+      var next = state.flatTree[index + 1];
+      if (index + 1 < state.flatTree.length) commit('SET_SELECTED_ITEM', next.id);
     }
+  },
+
+  // Сдвиг вправо
+  // Требует доработки: когда между сдвигаемым и предыдущим разница в несколько уровней, они пропускаются
+  indentItem({ state, commit }) {
+    var index = state.flatTree.map((el) => el.id).indexOf(state.selectedItem);
+    if (index == 0) return;
+    var current = state.flatTree[index];
+    var prev = state.flatTree[index - 1];
+
+    var prevNode = utils.getNode(state.openList.tree, prev.id);
+    if (prevNode.children[0] && prevNode.children[0].id == state.selectedItem) return;
+
+    var currentNode = utils.getNode(state.openList.tree, state.selectedItem);
+    var parentNode = utils.getParent(state.openList.tree, state.selectedItem);
+
+    prevNode.children.push(currentNode);
+
+    if (!parentNode) {
+      var currentIndex = state.openList.tree.map((el) => el.id).indexOf(state.selectedItem);
+      state.openList.tree.splice(currentIndex, 1);
+    } else {
+      var currentIndex = parentNode.children.map((el) => el.id).indexOf(state.selectedItem);
+      parentNode.children.splice(currentIndex, 1);
+    }
+  },
+
+  // Сдвиг влево
+  unindentItem({ state, commit }) {
+    var current = state.flatTree.find(x => x.id === state.selectedItem);
+    if (current.depth == 0) return;
+
+    var parent = utils.getParent(state.openList.tree, current.id);
+    var index = parent.children.map((el) => el.id).indexOf(current.id);
+    var newParent = utils.getParent(state.openList.tree, parent.id);
+
+    if (!newParent) {
+      var newIndex = state.openList.tree.map((el) => el.id).indexOf(parent.id);
+      state.openList.tree.splice(newIndex + 1, 0, parent.children[index]);
+    } else {
+      var newIndex = newParent.children.map((el) => el.id).indexOf(parent.id);
+      newParent.children.splice(newIndex + 1, 0, parent.children[index]);
+    }
+
+    parent.children.splice(index, 1);
   },
 
   // Переименование
   async editItem({ state, commit }, payload) {
-    function findItem(array, id) {
-      for (let item of array) {
-        if (item.id === id) return item;
-        let result = findItem(item.children, id);
-        if (result) return result;
-      }
+    var found = utils.getNode(state.openList.tree, payload);
+    if (!found.link) {
+      commit('SET_EDIT_NAME', found.name);
+      commit('TOGGLE_EDIT_MODE', true);
     }
-    let found = await findItem(state.openList.tree, payload);
-    commit('SET_EDIT_NAME', found.name);
-    commit('TOGGLE_EDIT_MODE', true);
   },
 
   editDone({ state, commit }) {
@@ -69,45 +110,39 @@ export default {
     } else {
       commit('RENAME_ITEM', state.selectedItem);
     }
-    commit('TOGGLE_EDIT_MODE', null);
+    commit('TOGGLE_EDIT_MODE', false);
   },
 
   editCancel({ commit }) {
-    commit('TOGGLE_EDIT_MODE', null);
+    commit('TOGGLE_EDIT_MODE', false);
   },
 
   // Добавление нового элемента
   addDone({ state, commit }) {
-    let item = { id: uuid(), name: state.addName, expand: true, children: [] };
-    commit('ADD_NEW_ITEM', { id: state.selectedItem, add: item });
-    console.log('add');
+    var name = state.addName.trim();
+    if (name) {
+      var item = { id: uuid(), name: name, expand: true, color: 0, complete: false, children: [] };
+      commit('ADD_NEW_ITEM', { id: state.selectedItem, add: item });
+    }
     commit('TOGGLE_ADD_MODE', false);
-    commit('SET_ADD_NAME', null);
+    commit('SET_ADD_NAME', '');
   },
 
   addCancel({ commit }) {
     commit('TOGGLE_ADD_MODE', false);
-    commit('SET_ADD_NAME', null);
+    commit('SET_ADD_NAME', '');
   },
 
   // Создание ссылки
   createLink({ commit }, payload) {
-    let item = { id: uuid(), name: '[LINK]', link: payload, expand: true, children: [] };
+    var item = { id: uuid(), name: payload.name, link: payload.id, expand: true, color: 0, complete: false, children: [] };
     console.log(payload);
-    commit('ADD_NEW_ITEM', { id: payload, add: item });
+    commit('ADD_NEW_ITEM', { id: payload.id, add: item });
   },
 
 
   removeItem({ state, commit }) {
-
-    function findItem(array, id) {
-      for (let item of array) {
-        if (item.id === id) return item;
-        let result = findItem(item.children, id);
-        if (result) return result;
-      }
-    }
-    let found = findItem(state.openList.tree, state.selectedItem);
+    var found = utils.getNode(state.openList.tree, state.selectedItem);
 
     console.log(found);
     //commit('SAVE_DELETED_ITEM', found);
@@ -123,14 +158,14 @@ export default {
     commit('CLEAR_LISTS');
     await localforage.iterate((value, key, idx) => {
       if (/list-/.test(key)) {
-        let list = JSON.parse(value);
+        var list = JSON.parse(value);
         commit('ADD_LISTS', { id: list.id, name: list.name, created: list.created });
       }
     })
   },
 
   async nameCount({ commit }) {
-    let counter = await localforage.getItem('name-number');
+    var counter = await localforage.getItem('name-number');
     if (counter) {
       counter = counter + 1;
     } else {
@@ -141,7 +176,7 @@ export default {
   },
 
   async createList({ state, dispatch }) {
-    let list = state.defaultList;
+    var list = state.defaultList;
     list.id = uuid();
     list.created = new Date().getTime();
 
@@ -153,11 +188,11 @@ export default {
   },
 
   async initList({ state, commit, dispatch }) {
-    let def = await localforage.getItem('default');
+    var def = await localforage.getItem('default');
     if (def) {
       commit('SET_LIST_ID', def);
-      let value = await localforage.getItem('list-' + def);
-      let list = JSON.parse(value);
+      var value = await localforage.getItem('list-' + def);
+      var list = JSON.parse(value);
       commit('SET_LIST', list);
       commit('COMPILE_FLAT_TREE');
       await dispatch('getLists');
@@ -171,14 +206,14 @@ export default {
 
   async changeList({ state, commit }, payload) {
     commit('SET_LIST_ID', payload);
-    let list = await localforage.getItem('list-' + payload);
+    var list = await localforage.getItem('list-' + payload);
     commit('SET_LIST', JSON.parse(list));
     await localforage.setItem('default', state.openListId);
   },
 
   async renameList({ state, dispatch }, payload) {
-    let value = await localforage.getItem('list-' + payload.id);
-    let list = JSON.parse(value);
+    var value = await localforage.getItem('list-' + payload.id);
+    var list = JSON.parse(value);
     list.name = payload.name;
     if (state.openListId === payload.id) {
       state.openList.name = payload.name;
@@ -201,12 +236,12 @@ export default {
   },
 
   async exportList({ state }, payload) {
-    let value = await localforage.getItem('list-' + payload);
-    let list = JSON.parse(value);
+    var value = await localforage.getItem('list-' + payload);
+    var list = JSON.parse(value);
     const blob = new Blob([JSON.stringify(list)], { type: 'text/plain;charset=utf-8' });
     const downloadLink = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.download = `${list.name} (${new Date().getTime()}).json`
+    a.download = `${list.name} (${moment().format('DD-MM-YY hh-mm')}).json`
     a.href = downloadLink;
     a.click();
     window.URL.revokeObjectURL(downloadLink);
@@ -215,7 +250,7 @@ export default {
   async importList({ dispatch }, payload) {
     const reader = new FileReader();
     reader.onloadend = async function(e) {
-      let list = JSON.parse(e.target.result);
+      var list = JSON.parse(e.target.result);
       list.id = uuid();
       await localforage.setItem('list-' + list.id, JSON.stringify(list));
       await dispatch('getLists');
