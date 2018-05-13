@@ -1,7 +1,7 @@
 <template>
   <div id="search">
 
-    <div v-if="!query" class="level is-hidden-mobile">
+    <div v-if="!query" class="level is-hidden-touch">
       <div class="level-left"></div>
 
       <div class="level-right">
@@ -18,15 +18,18 @@
     <div class="columns is-centered">
       <div class="column is-9-tablet is-8-desktop is-7-widescreen is-6-fullhd">
 
-        <div v-if="!query" class="search-title is-hidden-mobile">
+        <div v-if="!query" class="search-title is-hidden-touch">
           <h1 class="is-size-1 has-text-centered">Поиск по книгам</h1>
           <h2 class="is-size-5 has-text-centered">Карлоса Кастанеды и его соратников</h2>
         </div>
 
+        <div v-if="!query" class="search-title is-hidden-desktop">
+          <h1 class="is-size-3 has-text-centered">Поиск по книгам</h1>
+          <h2 class="is-size-6 has-text-centered">Карлоса Кастанеды и его соратников</h2>
+        </div>
+
         <search-bar :inputQuery="query" :inputBooks="books" />
         <search-result :query="query" :books="books" />
-
-        <last-queries v-if="!query"/>
 
       </div>
     </div>
@@ -36,7 +39,6 @@
 <script>
   import SearchBar from '@/components/search/SearchBar';
   import SearchResult from '@/components/search/SearchResult';
-  import LastQueries from '@/components/search/LastQueries';
 
   export default {
     name: 'SearchPage',
@@ -46,8 +48,7 @@
 
     components: {
       SearchBar,
-      SearchResult,
-      LastQueries
+      SearchResult
     },
 
     data() {
@@ -74,10 +75,12 @@
 
 <style lang="scss">
   @import '@/assets/variables.scss';
-
   .search-title {
     font-family: 'Open Sans', sans-serif;
-    margin-top: 18vh;
-    margin-bottom: 3vh;
+      margin-top: 4vh;
+      margin-bottom: 3vh;
+    @include desktop {
+      margin-top: 18vh;
+    }
   }
 </style>

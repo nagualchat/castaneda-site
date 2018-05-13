@@ -6,7 +6,7 @@
       </span>
     </div>
 
-    <div class="element" :class="[editMode && selectedItem == item.id ? 'element-selected-2' : '', !editMode && selectedItem == item.id ? 'element-selected-1' : '']" @click="SET_SELECTED_ITEM(item.id)" @dblclick="editItem(item.id)">
+    <div class="element" :class="[editMode && selectedItem == item.id ? 'element-selected-2' : '', !editMode && selectedItem == item.id ? 'element-selected-1' : '']" @mousedown="SET_SELECTED_ITEM(item.id)" @touchstart="SET_SELECTED_ITEM(item.id)" @dblclick="editItem(item.id)">
 
       <input type="text" v-if="editMode && selectedItem == item.id" v-model="editName" v-shortkey.avoid v-focus @keyup.enter="editDone()" @keyup.esc="editCancel()" @blur="editCancel()">
 
@@ -23,13 +23,15 @@
 
       <div class="element-menu" v-else-if="selectedItem == item.id">
 
-        <span @click="TOGGLE_ADD_MODE(true)" title="Добавить новое">
-          <i class="icon-active mdi mdi-18px mdi-plus"></i>
-        </span>
+        <a class="icon icon-active" @click="TOGGLE_ADD_MODE(true)" title="Добавить новое">
+          <i class="mdi mdi-18px mdi-plus is-hidden-touch"></i>
+          <i class="mdi mdi-24px mdi-plus is-hidden-desktop"></i>
+        </a>
 
         <b-dropdown ref="listdropdown" v-show="!item.link">
-          <a class="icon-active" slot="trigger" title="Меню" v-show="!item.link">
-            <i class="mdi mdi-18px mdi-dots-vertical"></i>
+          <a class="icon icon-active" slot="trigger" title="Меню" v-show="!item.link">
+            <i class="mdi mdi-18px mdi-dots-vertical is-hidden-touch"></i>
+            <i class="mdi mdi-24px mdi-dots-vertical is-hidden-desktop"></i>
           </a>
           <b-dropdown-item custom >
             <div class="level is-mobile"  @click="$refs.listdropdown.toggle()">
@@ -42,7 +44,7 @@
           <b-dropdown-item class="is-hidden-touch" custom></b-dropdown-item>
           <b-dropdown-item @click="TOGGLE_COMPLETE()">
             <i class="icon-active mdi mdi-18px mdi-spellcheck"></i>
-            <span>{{ item.complete ? 'Убрать отметку' : 'Отметить'}}</span>
+            <span>{{ item.complete ? 'Убрать вычёркивание' : 'Вычеркнуть'}}</span>
           </b-dropdown-item>
           <b-dropdown-item separator></b-dropdown-item>
           <b-dropdown-item @click="createLink(item)">

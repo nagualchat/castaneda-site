@@ -43,7 +43,7 @@
             <span class="is-hidden-desktop">Ночная тема</span>
 
             <b-switch size="is-small" v-model="isThemeChecked" title="Ночная тема" disabled></b-switch>
-            <b-icon class="is-hidden-mobile" custom-size="mdi-18px" icon="weather-night"></b-icon>
+            <b-icon class="is-hidden-touch" custom-size="mdi-18px" icon="weather-night"></b-icon>
 
           </div>
         </div>
