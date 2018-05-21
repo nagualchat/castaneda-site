@@ -17,7 +17,7 @@
 
 #reader .columns {
   @include mobile {
-    margin-right: -1rem;
+    margin: 0 -1.2rem;
   }
 }
 
@@ -38,12 +38,17 @@
   }
 }
 
-.field.is-grouped.is-grouped-multiline > .control:last-child, .field.is-grouped.is-grouped-multiline > .control:not(:last-child) {
+.field.is-grouped.is-grouped-multiline>.control:last-child,
+.field.is-grouped.is-grouped-multiline>.control:not(:last-child) {
   margin-bottom: 0.5rem;
 }
 
-.field.is-grouped > .control:not(:last-child) {
+.field.is-grouped>.control:not(:last-child) {
   margin-right: 0.5rem;
+}
+
+.notices .snackbar .action .button {
+  font-weight: 400;
 }
 
 /* Общее */

@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div class="columns is-centered">
       <div class="column is-narrow">
         <br>
@@ -13,10 +14,13 @@
         </div>
       </div>
     </div>
+
     <pre>selectedItem = {{ selectedItem }}</pre>
-    <pre>flatTree = {{ flatTree }}</pre>
+    <pre>deletedItems = {{ deletedItems }}</pre>
     <pre>openList = {{ openList }}</pre>
+    <pre>flatTree = {{ flatTree }}</pre>
     <pre>listLists = {{ listLists }}</pre>
+
   </div>
 </template>
 
@@ -29,6 +33,8 @@
     computed: {
       ...mapState({
         selectedItem: state => state.list.selectedItem,
+        deletedItems: state => state.list.deletedItems,
+
         openList: state => state.list.openList,
         flatTree: state => state.list.flatTree,
         listLists: state => state.list.listLists,

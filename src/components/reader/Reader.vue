@@ -7,18 +7,11 @@
 
     <table>
       <tr class="row" v-for="item in chapterData.paragraphs" :key="item.number">
-        <td>
-            <div v-if="item.type == 'empty-line'" class="ch-empty-line"></div>
-            <div v-else :id="`p${item.number}`"
-              :class="[`ch-${item.type}`, highlighted == item.number ? 'ch-hightlight' : null]">
-              {{ item.text }}
-            </div>
-        </td>
 
         <td class="hidden-menu">
-          <b-dropdown class="is-unselectable">
-            <a class="is-borderless icon invert-link is-small" slot="trigger">
-              <b-icon icon="arrow-left-thick"></b-icon>
+          <b-dropdown class="is-unselectable" style="vertical-align: top;">
+            <a class="is-borderless icon invert-link" slot="trigger">
+              <b-icon custom-size="mdi-18px" icon="arrow-right-thick"></b-icon>
             </a>
 
             <b-dropdown-item @click="doCopy(item, 'link')">
@@ -52,6 +45,16 @@
             </b-dropdown-item>
           </b-dropdown>
         </td>
+
+        <td>
+          <div v-if="item.type == 'empty-line'" class="ch-empty-line"></div>
+          <div v-else :id="`p${item.number}`"
+            :class="[`ch-${item.type}`, highlighted == item.number ? 'ch-hightlight' : null]">
+            {{ item.text }}
+          </div>
+        </td>
+
+
       </tr>
     </table>
 
@@ -143,11 +146,12 @@
 
 <style lang="scss">
   @import '@/assets/variables.scss';
+
   .hidden-menu {
+    vertical-align: top;
+    float: left;
+    margin-right: -20px;
     opacity: 0;
-    @include desktop {
-      padding: 0 10px;
-    }
   }
 
   .row:hover .hidden-menu {
@@ -171,14 +175,14 @@
     font-size: $size-5;
     font-weight: $weight-semibold;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 0.5em;
   }
 
   .ch-subtitle {
-    font-size: 1.05em;
+    font-size: $size-6;
     font-weight: $weight-semibold;
     text-indent: 1.2em;
-    margin-top: 10px;
+    //margin-top: 0.5em;
   }
 
   .ch-paragraph {
@@ -191,10 +195,10 @@
   }
 
   .ch-epigraph {
-    margin: 0 auto;
-    margin-right: 5em;
-    margin-left: 25%;
+    margin-right: 10%;
+    margin-left: 10%;
     font-style: italic;
+    text-align: justify;
   }
 
   .ch-poem {

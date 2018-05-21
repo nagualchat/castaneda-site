@@ -121,8 +121,7 @@
       <tr>
         <td>Перевод darorla.org</td>
         <td>
-          <a href="http://darorla.org/index.php?topic=3717.0" target="_blank">forum</a>
-          ,
+          <a href="http://darorla.org/index.php?topic=3717.0" target="_blank">forum</a>,
           <a href="/static/lib/analysis/Структурный анализ (перевод darorla.org, 2016г).doc">doc</a>
         </td>
       </tr>

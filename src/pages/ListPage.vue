@@ -5,34 +5,42 @@
         <div class="column is-9-tablet is-8-desktop is-7-widescreen is-6-fullhd">
 
           <b-notification class="notify" :active.sync="isShowStartNotify" @close="$store.commit('SET_START_NOTIFY', false)">
-            <p>На данный момент приложение хоть и более-менее работает, но оно всё ещё очень сырое, поэтому не рекомендуется его использовать для чего-то кроме тестирования.</p>
-            <!-- <p>О технике перепросмотра и о том, как пользоваться этим приложением можно прочитать в <router-link to="/list-info">разделе справки</router-link>.</p> -->
+            <p>О технике перепросмотра и о том, как пользоваться этим приложением можно прочитать в <router-link to="/list-info">разделе справки</router-link>.</p>
           </b-notification>
 
           <nav class="level tree-header is-mobile">
             <div class="level-left">
               <div class="level-item">
                 <a class="invert-link" @click="isListsMenu = !isListsMenu">
-                  <span>{{ openList.name }}</span>
+                  <span>{{ openList.title }}</span>
                 </a>
               </div>
             </div>
+
             <div class="level-right">
-              <div class="level-item">
-                <b-dropdown>
-                  <a class="invert-link" slot="trigger">
-                    <span>{{ itemsInList }}</span>
-                  </a>
-                  <b-dropdown-item custom>
-
-                    <div class="level is-mobile list-stat">
-                      <div class="level-item">Создан</div>
-                      <div class="level-item">{{ createdDate }}</div>
+              <b-dropdown>
+                <a class="level-item invert-link" slot="trigger">
+                  <span>{{ totalItems }}</span>
+                </a>
+                <b-dropdown-item custom>
+                  <div class="level is-mobile list-stat">
+                    <div class="level-left">
+                      <b-icon class="level-item" custom-size="mdi-18px" icon="calendar-clock"></b-icon>
+                      <span class="level-item">Список создан</span>
                     </div>
-
-                  </b-dropdown-item>
-                </b-dropdown>
-              </div>
+                    <div class="level-right level-item">{{ createdDate }}</div>
+                  </div>
+                </b-dropdown-item>
+                <b-dropdown-item v-if="completeItems" custom>
+                  <div class="level is-mobile list-stat">
+                    <div class="level-left">
+                      <b-icon class="level-item" custom-size="mdi-18px" icon="checkbox-marked-outline"></b-icon>
+                      <span class="level-item">Отмечены как выполненные</span>
+                    </div>
+                    <div class="level-right level-item">{{ completeItems }}</div>
+                  </div>
+                </b-dropdown-item>
+              </b-dropdown>
 
               <div class="level-item">
                 <router-link class="icon invert-link is-borderless" to="/list-info">
@@ -47,7 +55,9 @@
             <lists-modal />
           </b-modal>
 
-          <tree :treeData="openList.tree" />
+          <tree v-if="openList.tree[0]" id="tree" :treeData="openList.tree" />
+          <empty-tree-adding v-if="flatTree && !openList.tree[0]" />
+
           <debug-panel @clear="сlearStorage()" v-show="isDebug" />
 
         </div>
@@ -61,6 +71,8 @@
   import Hotkeys from '@/components/list/Hotkeys';
   import DebugPanel from '@/components/list/DebugPanel';
   import ListsModal from '@/components/list/ListsModal';
+  import EmptyTreeAdding from '@/components/list/EmptyTreeAdding';
+
   import { mapState, mapActions, mapGetters } from 'vuex';
 
   export default {
@@ -75,6 +87,7 @@
 
     components: {
       Tree,
+      EmptyTreeAdding,
       Hotkeys,
       DebugPanel,
       ListsModal
@@ -90,11 +103,12 @@
     computed: {
       ...mapState({
         openList: state => state.list.openList,
+        flatTree: state => state.list.flatTree,
         isDebug: state => state.list.isDebug,
         isShowStartNotify: state => state.list.isShowStartNotify,
-        isShowDeleteSnack: state => state.list.isShowDeleteSnack,
+        isShowUndoSnack: state => state.list.isShowUndoSnack,
       }),
-      ...mapGetters(['itemsInList', 'createdDate'])
+      ...mapGetters(['totalItems', 'completeItems', 'createdDate'])
     },
 
     created() {
@@ -102,34 +116,28 @@
     },
 
     watch: {
-      isShowDeleteSnack: {
+      isShowUndoSnack: {
         handler: function() {
-          this.deleteSnackbar();
+          this.showSnackbar();
         }
       }
     },
 
     methods: {
-      deleteSnackbar() {
+      ...mapActions(['undoRemove']),
+
+      showSnackbar() {
         this.$snackbar.open({
           duration: 20000,
-          message: 'Элемент удалён',
+          message: `Элемент удалён`,
           type: 'is-danger',
           position: 'is-bottom-right',
           actionText: 'ОТМЕНА',
-          queue: false,
+          queue: true,
           onAction: () => {
-            console.log('ON')
+            this.undoRemove();
           }
         })
-      }
-    },
-
-    directives: {
-      focus: {
-        inserted: function(el) {
-          el.focus();
-        }
       }
     }
   };
@@ -137,11 +145,15 @@
 
 <style lang="scss">
   @import '@/assets/variables.scss';
+  #tree {
+    padding-left: 0.6em;
+  }
+
   .notify {
-    font-size: 0.9em;
-    color: desaturate(darken($primary, colorLuminance($primary) * 70%), colorLuminance($primary) * 30%);
-    border: 1px solid $primary;
-    background-color: lighten($primary, max((100% - lightness($primary)) - 2%, 0%)) !important;
+    font-size: $size-7;
+    color: $text;
+    border: 1px solid $dark;
+    background-color: $white !important;
   }
 
   .tree-header {
@@ -159,4 +171,9 @@
       width: 300px;
     }
   }
+
+  .list-stat > div > .icon {
+    margin-right: 3px !important;
+  }
+
 </style>

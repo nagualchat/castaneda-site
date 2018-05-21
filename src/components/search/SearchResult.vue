@@ -5,7 +5,7 @@
     </div>
 
     <div class="search-item" v-for="(item, index) in results" :key="index">
-      <div class="search-item-title">
+      <div class="search-item-title is-size-6">
       <router-link :to="`/reader?book=${item._source.book.id}&ch=${item._source.chapter.id}&p=${item._source.content.number}`">{{ item._source.book.author }} — {{ item._source.book.title }}</router-link>
       </div>
       <div class="search-item-subtitle">{{ item._source.chapter.title }}</div>
@@ -96,12 +96,8 @@
     margin-top: 0em  !important;
   }
 
-  .search-item-title {
-    font-size: 1em;
-  }
-
   .search-item-subtitle {
-    font-size: 0.9em;
+    font-size: $size-8;
     margin-bottom: 0.3em;
   }
 

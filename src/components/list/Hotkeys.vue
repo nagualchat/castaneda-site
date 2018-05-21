@@ -15,18 +15,28 @@
         shortcuts: {
           up: ['arrowup'],
           down: ['arrowdown'],
+
           collapse: ['arrowleft'],
           expand: ['arrowright'],
-          enter: ['enter'],
-          rename: ['f2'],
+
           indent: ['tab'],
           unindent: ['shift', 'tab'],
+          indent_alt: ['ctrl', 'arrowright'],
+          unindent_alt: ['ctrl', 'arrowleft'],
+
+          enter: ['enter'],
+          delete: ['shift', 'del'],
+          rename: ['f2'],
+          note: ['='],
           complete: ['-'],
-          delete: ['del'],
+
           color_1: ['1'],
           color_2: ['2'],
           color_3: ['3'],
+          color_4: ['4'],
           color_0: ['0'],
+
+          tree_debug: ['shift', 'd'],
         }
       }
     },
@@ -37,17 +47,16 @@
         flatTree: state => state.list.flatTree,
         selectedItem: state => state.list.selectedItem,
         addMode: state => state.list.addMode,
-        editMode: state => state.list.editMode,
+        renameMode: state => state.list.renameMode,
       }),
     },
 
     methods: {
-      ...mapMutations(['SET_SELECTED_ITEM', 'TOGGLE_ADD_MODE', 'TOGGLE_EDIT_MODE', 'DELETE_ITEM', 'SET_EXPAND', 'TOGGLE_COMPLETE', 'SET_ITEM_COLOR']),
-      ...mapActions(['initList', 'addDone', 'addCancel', 'editItem', 'editDone', 'editCancel', 'selectUp', 'selectDown', 'indentItem', 'unindentItem', 'removeItem']),
+      ...mapMutations(['SET_SELECTED_ITEM', 'TOGGLE_ADD_MODE', 'TOGGLE_EDIT_MODE', 'DELETE_ITEM', 'SET_EXPAND', 'TOGGLE_COMPLETE', 'SET_ITEM_COLOR', 'SET_DEBUG_MODE']),
+      ...mapActions(['initList', 'addDone', 'addCancel', 'renameItem', 'renameDone', 'renameCancel', 'editNote', 'selectUp', 'selectDown', 'indentItem', 'unindentItem', 'removeItem']),
 
       keyPress: function(event) {
         switch (event.srcKey) {
-
           case 'up':
             {
               this.selectUp();
@@ -61,32 +70,26 @@
           case 'collapse':
             {
               if (!this.addMode && !this.editMode) {
-                this.SET_EXPAND({id: null, state: false });
+                this.SET_EXPAND({ id: null, state: false });
               }
               break;
             }
           case 'expand':
             {
               if (!this.addMode && !this.editMode) {
-                this.SET_EXPAND({id: null, state: true });
+                this.SET_EXPAND({ id: null, state: true });
               }
               break;
             }
           case 'enter':
             {
-              //if (!this.addMode)
-              //   this.addDone(this.selectedItem)
-              // } else if (!this.editMode) {
               this.TOGGLE_ADD_MODE(true);
-              // } else {
-              //   this.editDone(this.selectedItem)
-              // }
               break;
             }
           case 'rename':
             {
               if (!this.editMode) {
-                this.editItem(this.selectedItem);
+                this.renameItem(this.selectedItem);
               } else {
                 this.TOGGLE_EDIT_MODE(false);
               }
@@ -96,15 +99,16 @@
           case 'delete':
             {
               this.removeItem();
-              this.selectDown();
               break;
             }
           case 'indent':
+          case 'indent_alt':
             {
               this.indentItem();
               break;
             }
           case 'unindent':
+          case 'unindent_alt':
             {
               this.unindentItem();
               break;
@@ -114,10 +118,21 @@
               this.TOGGLE_COMPLETE();
               break;
             }
+          case 'note':
+            {
+              this.editNote(this.selectedItem);
+              break;
+            }
           case /color_/.test(event.srcKey) && event.srcKey:
             {
               var colorId = event.srcKey.match(/color_(.*)/i);
+              if (colorId[1] == 4) colorId[1] = 0;
               this.SET_ITEM_COLOR(colorId[1]);
+              break;
+            }
+          case 'tree_debug':
+            {
+              this.SET_DEBUG_MODE();
               break;
             }
         }

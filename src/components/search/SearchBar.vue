@@ -111,11 +111,6 @@
     vertical-align: middle;
   }
 
-  .queries-tag {
-    font-size: 0.9em !important;
-    height: 1em !important;
-  }
-
   .link-icons-bar {
     margin-bottom: 1vh !important;
   }

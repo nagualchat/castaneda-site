@@ -1,3 +1,13 @@
+const debounce = (callback, time) => {
+  let interval;
+  return (...args) => {
+    clearTimeout(interval);
+    interval = setTimeout(() => {
+      interval = null;
+      callback(...args);
+    }, time);
+  };
+};
 
 const getIndex = (node, id) => {
   return node.map((el) => el.id).indexOf(id);

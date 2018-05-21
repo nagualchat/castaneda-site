@@ -16,20 +16,26 @@
         td #[span.key Enter]
         td Добавить новый элемент
       tr
+        td #[span.key Shift + Delele]
+        td Удалить
+      tr
         td #[span.key F2]
         td Переименовать
+      tr
+        td #[span.key =]
+        td Добавить примечание
       tr
         td #[span.key Esc]
         td Отменить редактирование
       tr
-        td #[span.key Tab] #[span.key Shift+Tab]
+        td #[span.key Tab] #[span.key Shift + Tab] или #[span.key Ctrl + →] #[span.key Ctrl + ←]
         td Сдвинуть вправо/влево
       tr
         td #[span.key 1] #[span.key 2] #[span.key 3] #[span.key 0]
         td Выделить цветом
       tr
         td #[span.key -]
-        td Вычеркнуть
+        td Отметить выполненным
 
 </template>
 

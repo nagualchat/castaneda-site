@@ -11,7 +11,7 @@
 
           <div class="level-left">
             <div class="level-item">
-              <b-radio v-model="selected" :native-value="list.id">{{ list.name }}</b-radio>
+              <b-radio v-model="selected" :native-value="list.id">{{ list.title }}</b-radio>
             </div>
           </div>
 
@@ -23,7 +23,7 @@
             </div>
             <div class="level-item">
               <a class="button is-small is-secondary" title="Экспортировать" @click="exportFile(list)">
-                <b-icon custom-size="mdi-18px" icon="export"></b-icon>
+                <b-icon custom-size="mdi-18px" icon="download"></b-icon>
               </a>
             </div>
             <div class="level-item">
@@ -44,7 +44,7 @@
 
         <b-upload accept=".json" v-model="file" @input="importFile()">
           <a class="button is-secondary">
-            <b-icon icon="upload"></b-icon>
+            <b-icon icon="import"></b-icon>
             <span>Импортировать</span>
           </a>
         </b-upload>
@@ -88,10 +88,10 @@
           confirmText: 'Готово',
           cancelText: 'Отмена',
           inputAttrs: {
-            value: list.name,
+            value: list.title,
             maxlength: 30
           },
-          onConfirm: (value) => this.$store.dispatch('renameList', { id: list.id, name: value })
+          onConfirm: (value) => this.$store.dispatch('renameList', { id: list.id, title: value })
         })
       },
 

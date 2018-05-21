@@ -3,12 +3,10 @@
 
     <div v-if="!query" class="level is-hidden-touch">
       <div class="level-left"></div>
-
       <div class="level-right">
         <a class="level-item invert-link" href="tg://resolve?domain=nagualchat" title="Группа в телеграме">
           <b-icon pack="fab" icon="telegram" size="is-medium"></b-icon>
         </a>
-
         <a class="level-item invert-link" href="https://github.com/nagualchat/nagualchat-site" target="_blank" title="Гитхаб">
           <b-icon pack="fab" icon="github" size="is-medium"></b-icon>
         </a>
@@ -17,21 +15,14 @@
 
     <div class="columns is-centered">
       <div class="column is-9-tablet is-8-desktop is-7-widescreen is-6-fullhd">
-
-        <div v-if="!query" class="search-title is-hidden-touch">
-          <h1 class="is-size-1 has-text-centered">Поиск по книгам</h1>
-          <h2 class="is-size-5 has-text-centered">Карлоса Кастанеды и его соратников</h2>
+        <div v-if="!query" class="search-title">
+          <h1 class="has-text-centered">Поиск по книгам</h1>
+          <h2 class="has-text-centered">Карлоса Кастанеды и его соратников</h2>
         </div>
-
-        <div v-if="!query" class="search-title is-hidden-desktop">
-          <h1 class="is-size-3 has-text-centered">Поиск по книгам</h1>
-          <h2 class="is-size-6 has-text-centered">Карлоса Кастанеды и его соратников</h2>
-        </div>
-
         <search-bar :inputQuery="query" :inputBooks="books" />
         <search-result :query="query" :books="books" />
-
       </div>
+
     </div>
   </div>
 </template>
@@ -75,12 +66,31 @@
 
 <style lang="scss">
   @import '@/assets/variables.scss';
+
   .search-title {
     font-family: 'Open Sans', sans-serif;
-      margin-top: 4vh;
       margin-bottom: 3vh;
-    @include desktop {
       margin-top: 18vh;
+    @include tablet {
+      margin-top: 10vh;
+    }
+    @include mobile {
+      margin-top: 0.5em;
+      margin-bottom: 8vh;
+    }
+  }
+
+  .search-title h1 {
+    font-size: $size-1;
+    @include mobile {
+      font-size: $size-3;
+    }
+  }
+
+  .search-title h2 {
+    font-size: $size-5;
+    @include mobile {
+      font-size: $size-6;
     }
   }
 </style>

@@ -14,6 +14,10 @@ $warning-invert: findColorInvert($warning);
 $danger: #ed6c63;
 $danger-invert: findColorInvert($danger);
 
+$list-color-1: #e73e32;
+$list-color-2: #099a4d;
+$list-color-3: #1e70cd;
+
 $white: $white;
 $white-invert: findColorInvert($white);
 $black: #353535;
@@ -29,13 +33,14 @@ $colors: (
   "danger": ($danger, $danger-invert),
 
   "white": ($white, $white-invert),
+  "dark": ($dark, $dark-invert),
   "black": ($black, $black-invert),
 );
 
 $text: $grey-dark;
 $background: $white-ter;
 
-$link: #1e70cd;
+$link: $info;
 $link-invert: findColorInvert($link);
 $link-hover: $text;
 
@@ -43,4 +48,8 @@ $highlight: $warning;
 
 $tree-border-active: $border-hover;
 $tree-icon: $text;
-$tree-icon-hover: $link;
+
+$size-7: 0.95rem;
+$size-8: 0.9rem;
+
+$sizes: ($size-1, $size-2, $size-3, $size-4, $size-5, $size-6, $size-7, $size-8);

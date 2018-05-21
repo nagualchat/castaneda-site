@@ -19,7 +19,7 @@
     metaInfo: {
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
         { vmid: 'description', name: 'description', content: 'Инструменты, облегчающие изучение пути знания толтеков, изложенного в текстах Карлоса Кастанеды: полнотекстовый поиск по книгам, цитирование фрагмента с обратной ссылкой на главу, приложение для составления списка перепросмотра.' }
       ],
       title: 'Главная',

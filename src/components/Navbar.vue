@@ -34,11 +34,6 @@
             <b-icon size="is-small" icon="open-in-new"></b-icon>
           </a>
 
-          <div class="navbar-item is-hidden" :class="{ 'is-hidden': this.$route.path != '/list' }">
-            <b-switch size="is-small" v-model="isDebugChecked"></b-switch>
-            <b-icon custom-size="mdi-18px" icon="code-braces"></b-icon>
-          </div>
-
           <div class="navbar-item">
             <span class="is-hidden-desktop">Ночная тема</span>
 
@@ -63,15 +58,6 @@
     },
 
     computed: {
-      isDebugChecked: {
-        get() {
-          return this.$store.state.list.isDebug;
-        },
-        set(value) {
-          this.$store.commit('SET_DEBUG_MODE', value);
-        }
-      },
-
       isThemeChecked: {
         get() {
           return this.$store.state.main.isDarkTheme;

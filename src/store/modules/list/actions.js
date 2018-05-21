@@ -95,37 +95,57 @@ export default {
   },
 
   // Переименование
-  async editItem({ state, commit }, payload) {
-    var found = utils.getNode(state.openList.tree, payload);
+  async renameItem({ state, commit }) {
+    var found = utils.getNode(state.openList.tree, state.selectedItem);
     if (!found.link) {
-      commit('SET_EDIT_NAME', found.name);
-      commit('TOGGLE_EDIT_MODE', true);
+      commit('SET_NAME_BUFFER', found.name);
+      commit('TOGGLE_RENAME_MODE', true);
     }
   },
 
-  editDone({ state, commit }) {
-    commit('SET_EDIT_NAME', state.editName.trim());
-    if (!state.editName) {
+  renameDone({ state, commit }) {
+    commit('SET_NAME_BUFFER', state.nameBuffer.trim());
+    if (!state.nameBuffer) {
       commit('DELETE_ITEM', state.selectedItem);
     } else {
       commit('RENAME_ITEM', state.selectedItem);
     }
-    commit('TOGGLE_EDIT_MODE', false);
+    commit('TOGGLE_RENAME_MODE', false);
   },
 
-  editCancel({ commit }) {
-    commit('TOGGLE_EDIT_MODE', false);
+  renameCancel({ commit }) {
+    commit('TOGGLE_RENAME_MODE', false);
+  },
+
+  // Добавление/изменение заметки
+  async editNote({ state, commit }) {
+    var found = utils.getNode(state.openList.tree, state.selectedItem);
+    if (!found.link) {
+      commit('SET_NOTE_BUFFER', found.note);
+      commit('TOGGLE_EDIT_NOTE_MODE', true);
+    }
+  },
+
+  editNoteDone({ state, commit }) {
+    commit('SET_NOTE_BUFFER', state.noteBuffer.trim());
+    commit('EDIT_NOTE', state.selectedItem);
+    commit('TOGGLE_EDIT_NOTE_MODE', false);
+  },
+
+  editNoteCancel({ commit }) {
+    commit('TOGGLE_EDIT_NOTE_MODE', false);
   },
 
   // Добавление нового элемента
   addDone({ state, commit }) {
     var name = state.addName.trim();
-    if (name) {
-      var item = { id: uuid(), name: name, expand: true, color: 0, complete: false, children: [] };
-      commit('ADD_NEW_ITEM', { id: state.selectedItem, add: item });
-    }
+    if (!name) return;
+    var item = { id: uuid(), name: name, note: '', color: 0, complete: false, expand: true, children: [] };
+
+    commit('ADD_NEW_ITEM', { id: state.selectedItem, add: item });
     commit('TOGGLE_ADD_MODE', false);
     commit('SET_ADD_NAME', '');
+    commit('SET_SELECTED_ITEM', item.id);
   },
 
   addCancel({ commit }) {
@@ -135,22 +155,26 @@ export default {
 
   // Создание ссылки
   createLink({ commit }, payload) {
-    var item = { id: uuid(), name: payload.name, link: payload.id, expand: true, color: 0, complete: false, children: [] };
-    console.log(payload);
+    var item = { id: uuid(), name: payload.name, link: payload.id, note: payload.note, color: payload.color, complete: payload.complete, expand: true, children: [] };
     commit('ADD_NEW_ITEM', { id: payload.id, add: item });
   },
 
+  removeItem({ state, commit, dispatch }) {
+    var item = utils.getNode(state.openList.tree, state.selectedItem);
+    var parent = utils.getParent(state.openList.tree, state.selectedItem);
+    if (!parent) parent = { id: 'root', children: state.openList.tree };
+    var index = parent.children.map((el) => el.id).indexOf(state.selectedItem);
 
-  removeItem({ state, commit }) {
-    var found = utils.getNode(state.openList.tree, state.selectedItem);
-
-    console.log(found);
-    //commit('SAVE_DELETED_ITEM', found);
+    commit('SAVE_DELETED_ITEM', { parent: parent.id, index, item });
     commit('DELETE_ITEM', state.selectedItem);
-    //commit('SET_DELETE_SHACKBAR', true);
+    commit('SHOW_UNDO_SHACKBAR');
+    dispatch('selectDown');
   },
 
-  //undoRemove({ state, commit }) { },
+  undoRemove({ state, commit }) {
+    commit('SET_SELECTED_ITEM', state.deletedItems[state.deletedItems.length - 1].item.id);
+    commit('RESTORE_DELETED_ITEM');
+  },
 
   /*    ====   Списки  ====    */
 
@@ -159,7 +183,7 @@ export default {
     await localforage.iterate((value, key, idx) => {
       if (/list-/.test(key)) {
         var list = JSON.parse(value);
-        commit('ADD_LISTS', { id: list.id, name: list.name, created: list.created });
+        commit('ADD_LISTS', { id: list.id, title: list.title, created: list.created });
       }
     })
   },
@@ -181,7 +205,7 @@ export default {
     list.created = new Date().getTime();
 
     await dispatch('nameCount');
-    list.name = `Список ${state.newListNum}`;
+    list.title = `Список ${state.newListNum}`;
 
     await localforage.setItem('list-' + list.id, JSON.stringify(list));
     await dispatch('getLists');
@@ -201,7 +225,8 @@ export default {
       await dispatch('createList');
       await dispatch('changeList', state.listLists[0].id);
     }
-    await commit('SET_SELECTED_ITEM', state.openList.tree[0].id);
+    if (!state.openList.tree[0]) return;
+    commit('SET_SELECTED_ITEM', state.openList.tree[0].id);
   },
 
   async changeList({ state, commit }, payload) {
@@ -214,9 +239,9 @@ export default {
   async renameList({ state, dispatch }, payload) {
     var value = await localforage.getItem('list-' + payload.id);
     var list = JSON.parse(value);
-    list.name = payload.name;
+    list.title = payload.title;
     if (state.openListId === payload.id) {
-      state.openList.name = payload.name;
+      state.openList.title = payload.title;
     }
     await localforage.setItem('list-' + payload.id, JSON.stringify(list));
     await dispatch('getLists');
@@ -238,11 +263,13 @@ export default {
   async exportList({ state }, payload) {
     var value = await localforage.getItem('list-' + payload);
     var list = JSON.parse(value);
+
+    const a = document.createElement('a');
+    document.body.appendChild(a);
     const blob = new Blob([JSON.stringify(list)], { type: 'text/plain;charset=utf-8' });
     const downloadLink = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.download = `${list.name} (${moment().format('DD-MM-YY hh-mm')}).json`
     a.href = downloadLink;
+    a.download = `${list.title} (${moment().format('DD-MM-YY hh-mm')}).json`
     a.click();
     window.URL.revokeObjectURL(downloadLink);
   },

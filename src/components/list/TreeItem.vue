@@ -1,109 +1,100 @@
 <template>
   <li>
-    <div class="icon-active chevron" v-if="item.children && item.children.length > 0">
-      <span @click="SET_EXPAND({id: item.id })">
+    <div class="media element" :class="toggleClass(item.id)" @mousedown="SET_SELECTED_ITEM(item.id)" @touchstart="SET_SELECTED_ITEM(item.id)">
+
+      <div class="chevron" v-if="item.children && item.children.length > 0" @click="SET_EXPAND({id: item.id })">
         <b-icon :icon="item.expand ? 'menu-down' : 'menu-right'"></b-icon>
-      </span>
-    </div>
-
-    <div class="element" :class="[editMode && selectedItem == item.id ? 'element-selected-2' : '', !editMode && selectedItem == item.id ? 'element-selected-1' : '']" @mousedown="SET_SELECTED_ITEM(item.id)" @touchstart="SET_SELECTED_ITEM(item.id)" @dblclick="editItem(item.id)">
-
-      <input type="text" v-if="editMode && selectedItem == item.id" v-model="editName" v-shortkey.avoid v-focus @keyup.enter="editDone()" @keyup.esc="editCancel()" @blur="editCancel()">
-
-      <span v-else :class="['item-color-' + item.color, item.complete ? 'item-complete' : '']">{{ item.name }}</span>
-
-      <span class="element-menu" v-if="editMode && selectedItem == item.id">
-        <span @click="doneRename(item)">
-          <i class="icon-active mdi mdi-18px mdi-check"></i>
-        </span>
-        <span @click="cancelRename(item)">
-          <i class="icon-active mdi mdi-18px mdi-close"></i>
-        </span>
-      </span>
-
-      <div class="element-menu" v-else-if="selectedItem == item.id">
-
-        <a class="icon icon-active" @click="TOGGLE_ADD_MODE(true)" title="Добавить новое">
-          <i class="mdi mdi-18px mdi-plus is-hidden-touch"></i>
-          <i class="mdi mdi-24px mdi-plus is-hidden-desktop"></i>
-        </a>
-
-        <b-dropdown ref="listdropdown" v-show="!item.link">
-          <a class="icon icon-active" slot="trigger" title="Меню" v-show="!item.link">
-            <i class="mdi mdi-18px mdi-dots-vertical is-hidden-touch"></i>
-            <i class="mdi mdi-24px mdi-dots-vertical is-hidden-desktop"></i>
-          </a>
-          <b-dropdown-item custom >
-            <div class="level is-mobile"  @click="$refs.listdropdown.toggle()">
-              <button class="level-item button is-small is-danger" @click="SET_ITEM_COLOR('1')">1</button>
-              <button class="level-item button is-small is-success" @click="SET_ITEM_COLOR('2')">2</button>
-              <button class="level-item button is-small is-info" @click="SET_ITEM_COLOR('3')">3</button>
-              <button class="level-item button is-small is-black" @click="SET_ITEM_COLOR('0')">0</button>
-            </div>
-          </b-dropdown-item>
-          <b-dropdown-item class="is-hidden-touch" custom></b-dropdown-item>
-          <b-dropdown-item @click="TOGGLE_COMPLETE()">
-            <i class="icon-active mdi mdi-18px mdi-spellcheck"></i>
-            <span>{{ item.complete ? 'Убрать вычёркивание' : 'Вычеркнуть'}}</span>
-          </b-dropdown-item>
-          <b-dropdown-item separator></b-dropdown-item>
-          <b-dropdown-item @click="createLink(item)">
-            <i class="icon-active mdi mdi-18px mdi-link-variant"></i>
-            <span>Создать ссылку</span>
-          </b-dropdown-item>
-          <b-dropdown-item @click="editItem(item.id)">
-            <i class="icon-active mdi mdi-18px mdi-pencil"></i>
-            <span>Переименовать</span>
-          </b-dropdown-item>
-          <b-dropdown-item @click="DELETE_ITEM(item.id)">
-            <i class="icon-active mdi mdi-18px mdi-delete"></i>
-            <span>Удалить</span>
-          </b-dropdown-item>
-        </b-dropdown>
-
-        <span v-show="item.link" @click="DELETE_ITEM(item.id)" title="Удалить ссылку">
-          <i class="icon-active mdi mdi-18px mdi-link-variant-off"></i>
-        </span>
       </div>
 
-      <span class="element-menu" v-else>
-        <span v-show="item.link" title="Это ссылка">
-          <i class="icon-inactive mdi mdi-18px mdi-link-variant"></i>
-        </span>
-      </span>
+      <div class="media-content">
+        <input type="text" placeholder="Введите новое имя" v-if="renameMode && selectedItem == item.id" v-model="nameBuffer"
+         v-focus @keyup.enter="renameDone()" @keyup.esc="renameCancel()" @blur="blur('rename')">
+
+        <input type="text" placeholder="Введите текст примечания" v-else-if="editNoteMode && selectedItem == item.id" v-model="noteBuffer"
+         v-focus @keyup.enter="editNoteDone()" @keyup.esc="editNoteCancel()" @blur="blur('note')">
+
+        <div v-else class="drag-handle-desktop">
+          <span class="element-name drag-handle-touch" :class="['item-color-' + item.color, item.complete ? 'item-complete' : '']"
+           @dblclick.self="renameItem()">{{ item.name | truncate(25) }}</span>
+          <span v-if="item.note" class="element-note drag-handle-touch" @dblclick.self="editNote()" >({{ item.note | truncate(25) }})</span>
+        </div>
+      </div>
+
+      <div class="media-right" style="">
+        <div v-if="renameMode && selectedItem == item.id">
+          <a class="icon element-icon invert-link" @click="renameDone()">
+            <b-icon custom-size="mdi-18px" icon="check"></b-icon>
+          </a>
+          <a class="icon element-icon invert-link" @click="renameCancel()">
+            <b-icon custom-size="mdi-18px" icon="close"></b-icon>
+          </a>
+        </div>
+
+        <div v-else-if="editNoteMode && selectedItem == item.id">
+          <a class="icon element-icon invert-link" @click="editNoteDone()">
+            <b-icon custom-size="mdi-18px" icon="check"></b-icon>
+          </a>
+          <a class="icon element-icon invert-link" @click="editNoteCancel()">
+            <b-icon custom-size="mdi-18px" icon="close"></b-icon>
+          </a>
+        </div>
+
+        <div v-else-if="selectedItem == item.id">
+          <a class="icon element-icon invert-link" @click="TOGGLE_ADD_MODE(true)" title="Добавить новое">
+            <b-icon custom-size="mdi-18px" icon="plus"></b-icon>
+          </a>
+          <tree-item-menu :item="item" />
+          <a class="icon element-icon invert-link" v-show="item.link" @click="DELETE_ITEM(item.id)" title="Удалить ссылку">
+            <b-icon custom-size="mdi-18px" icon="link-variant-off"></b-icon>
+          </a>
+        </div>
+
+        <div v-else>
+          <a class="icon-inactive" v-show="item.link" title="Это ссылка">
+            <b-icon custom-size="mdi-18px" icon="link-variant"></b-icon>
+          </a>
+        </div>
+      </div>
     </div>
 
-    <div class="element element-selected-2 element-add" v-if="addMode && selectedItem == item.id">
-      <input placeholder="Добавить в список" v-model="addName" v-shortkey.avoid v-focus @keyup.enter="addDone()" @keyup.esc="addCancel()"
-        @blur="addCancel()">
-      <div class="element-menu">
-        <span @click="addDone(item.id)">
-          <i class="icon-active mdi mdi-18px mdi-check"></i>
-        </span>
-        <span @click="addCancel()">
-          <i class="icon-active mdi mdi-18px mdi-close"></i>
-        </span>
+    <div class="media element edit-style element-adding" v-if="addMode && selectedItem == item.id">
+      <div class="media-content">
+        <input type="text" placeholder="Введите имя для добавления" v-model="addName" v-focus
+         @keyup.enter="addDone()" @keyup.esc="addCancel()" @blur="blur('add')">
+      </div>
+
+      <div class="media-right">
+        <a class="icon element-icon invert-link" @click="addDone()">
+          <b-icon custom-size="mdi-18px" icon="check"></b-icon>
+        </a>
+        <a class="icon element-icon invert-link" @click="addCancel()">
+          <b-icon custom-size="mdi-18px" icon="close"></b-icon>
+        </a>
       </div>
     </div>
 
     <slot/>
-
   </li>
 </template>
 
 <script>
   import { mapState, mapMutations, mapActions } from 'vuex';
+  import TreeItemMenu from '@/components/list/TreeItemMenu';
 
   export default {
     name: 'tree-item',
     props: ['item'],
 
+    components: {
+      TreeItemMenu
+    },
+
     computed: {
       ...mapState({
-        flatTree: state => state.list.flatTree,
         selectedItem: state => state.list.selectedItem,
         addMode: state => state.list.addMode,
-        editMode: state => state.list.editMode
+        renameMode: state => state.list.renameMode,
+        editNoteMode: state => state.list.editNoteMode
       }),
 
       addName: {
@@ -115,31 +106,58 @@
         }
       },
 
-      editName: {
+      nameBuffer: {
         get() {
-          return this.$store.state.list.editName;
+          return this.$store.state.list.nameBuffer;
         },
         set(value) {
-          this.$store.commit('SET_EDIT_NAME', value)
+          this.$store.commit('SET_NAME_BUFFER', value)
+        }
+      },
+
+      noteBuffer: {
+        get() {
+          return this.$store.state.list.noteBuffer;
+        },
+        set(value) {
+          this.$store.commit('SET_NOTE_BUFFER', value)
         }
       },
     },
 
     methods: {
-      ...mapMutations(['SET_SELECTED_ITEM', 'TOGGLE_ADD_MODE', 'TOGGLE_EDIT_MODE', 'DELETE_ITEM', 'SET_EXPAND', 'TOGGLE_COMPLETE', 'SET_ITEM_COLOR']),
-      ...mapActions(['createLink', 'addDone', 'addCancel', 'editItem', 'editDone', 'editCancel']),
+      ...mapMutations(['SET_SELECTED_ITEM', 'TOGGLE_ADD_MODE', 'DELETE_ITEM', 'SET_EXPAND']),
+      ...mapActions(['addDone', 'addCancel', 'renameItem', 'renameDone', 'renameCancel', 'editNote', 'editNoteDone', 'editNoteCancel']),
 
-      showName: function(id) {
-        console.log("show")
-        return this.flatTree.find(x => x.id === id).name;
+      blur: function(mode) {
+        setTimeout(() => {
+          if (mode == 'add') {
+            this.addCancel();
+          } else if (mode == 'rename') {
+            this.renameCancel();
+          } else {
+            this.editNoteCancel();
+          }
+        }, 200)
+      },
+
+      toggleClass: function(id) {
+        if (this.editNoteMode && this.selectedItem == id) {
+          return 'edit-style';
+        } else if (this.renameMode && this.selectedItem == id) {
+          return 'edit-style';
+        } else if (!this.renameMode && this.selectedItem == id)
+          return 'select-style';
       }
+
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import '@/assets/variables.scss';
-  /* Расцветка элементов списка */
+  /* Расцветка отмеченных элементов списка */
+
   .item-complete {
     text-decoration: line-through;
     text-decoration-color: $text;
@@ -150,55 +168,87 @@
   }
 
   .item-color-1 {
-    color: $danger;
+    color: $list-color-1;
   }
 
   .item-color-2 {
-    color: $success;
+    color: $list-color-2;
   }
 
   .item-color-3 {
-    color: $info;
-  }
-  /* *********************** */
-
-  .sortable-ghost {
-    opacity: 0;
+    color: $list-color-3;
   }
 
-  .sortable-drag {
-    opacity: 1;
+  /* * * * * * * * * * * * * * */
+  .drop-zone {
+    min-height: 4px;
+    //border: 1px dashed $tree-border-active !important;
   }
 
-  ul,
+  #tree ul,
   li {
     list-style: none;
     padding-left: 10px;
-    font-size: 0.9rem;
   }
 
   li:first-child {
-    margin-top: 5px;
+    margin-top: 4px;
   }
 
   .chevron {
     float: left;
     width: 0px;
     position: relative;
-    left: -25px;
-    top: 7px;
+    left: -32px;
+    top: 1px;
     cursor: pointer;
   }
 
+  .element.media + .element.media {
+    margin-top: 0rem;
+    padding-top: 0rem;
+  }
+
   .element {
-    padding: 8px 10px;
+    min-height: 2.6rem;
+    padding: 4px 2px 4px 8px;
+    font-size: $size-7;
     cursor: default;
+    justify-content: center;
+    align-items: center;
+    @include desktop {
+      min-height: 2.2rem;
+    }
+  }
+
+  .element-name {
+    vertical-align: middle;
+    @include desktop {
+      vertical-align: top;
+    }
+  }
+
+  .element-note {
+    margin-left: 1em;
+    font-size: 0.8rem;
+    color: $grey-dark;
+    vertical-align: baseline;
+    @include touch {
+      display: block;
+      margin-left: 0em;
+      vertical-align: bottom;
+    }
+  }
+
+  .element-icon {
+    vertical-align: middle;
   }
 
   .element input {
     height: 20px;
+    width: 100%;
     border: none;
-    font-size: 0.9rem;
+    font-size: $size-8;
     background-color: $white;
   }
 
@@ -206,40 +256,21 @@
     outline: none;
   }
 
-  .element-selected-1 {
+  .element-adding {
+    padding-bottom: 0px;
+    margin: 4px 0 !important;
+  }
+
+  .select-style {
     background-color: $background;
   }
 
-  .element-selected-2 {
-    border: 1px dashed $tree-border-active;
-    padding-top: 7px;
-    padding-bottom: 7px;
-  }
-
-  .element-add {
-    margin-top: 8px;
-  }
-
-  .element-menu {
-    float: right;
-    line-height: 1.2;
+  .edit-style {
+    border: 1px dashed $tree-border-active !important;
   }
 
   .icon-inactive {
+    cursor: default;
     color: $tree-icon;
   }
-
-  .icon-active {
-    color: $tree-icon;
-    cursor: pointer;
-  }
-
-  .icon-active:hover {
-    color: $tree-icon-hover;
-  }
-
-  .element-menu .dropdown-item > i {
-    margin-right: 10px;
-  }
-
 </style>
