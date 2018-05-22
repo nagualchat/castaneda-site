@@ -59,6 +59,7 @@
     width: 100%;
     border: none;
     font-size: $size-8;
+    color: $text;
     background-color: $white;
   }
 
