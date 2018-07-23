@@ -1,9 +1,9 @@
-<script language=javascript>
-function redirect(){
-  window.location = "http://status.appbase.io";
-}
-</script>
-
-<body onload="redirect()">
-
-</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Hack to redirect SPA routes back to the index.html -->
+  <meta http-equiv="refresh" content="0;URL='http://nagualism.space'" />
+  <script>sessionStorage.redirect = location.href</script>
+</head>
+<body></body>
+</html>
