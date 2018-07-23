@@ -1,7 +1,7 @@
 var config = module.exports = {}
 
 if (process.env.NODE_ENV === 'production') {
-  config.selfHost = 'http://castaneda.ml/#/';
+  config.selfHost = 'http://nagualism.space/#/';
 } else {
   config.selfHost = 'http://0.0.0.0:8080/#/';
 }
