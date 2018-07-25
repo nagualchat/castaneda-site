@@ -1,0 +1,55 @@
+@import "~bulma/sass/utilities/_all";
+
+$primary: #5bc0de;
+$primary-invert: findColorInvert($primary);
+$secondary: #78909C;
+$secondary-invert: findColorInvert($secondary);
+
+$info: #1e70cd;
+$info-invert: findColorInvert($info);
+$success: #6ba879;
+$success-invert: #fff;
+$warning: #fae8b9;
+$warning-invert: findColorInvert($warning);
+$danger: #ed6c63;
+$danger-invert: findColorInvert($danger);
+
+$list-color-1: #e73e32;
+$list-color-2: #099a4d;
+$list-color-3: #1e70cd;
+
+$white: $white;
+$white-invert: findColorInvert($white);
+$black: #353535;
+$black-invert: findColorInvert($black);
+
+$colors: (
+  "primary": ($primary, $primary-invert),
+  "secondary": ($secondary, $secondary-invert),
+
+  "info": ($info, $info-invert),
+  "success": ($success, $success-invert),
+  "warning": ($warning, $warning-invert),
+  "danger": ($danger, $danger-invert),
+
+  "white": ($white, $white-invert),
+  "dark": ($dark, $dark-invert),
+  "black": ($black, $black-invert),
+);
+
+$text: $grey-dark;
+$background: $white-ter;
+
+$link: $info;
+$link-invert: findColorInvert($link);
+$link-hover: $text;
+
+$highlight: $warning;
+
+$tree-border-active: $border-hover;
+$tree-icon: $text;
+
+$size-7: 0.95rem;
+$size-8: 0.9rem;
+
+$sizes: ($size-1, $size-2, $size-3, $size-4, $size-5, $size-6, $size-7, $size-8);
