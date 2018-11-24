@@ -1,12 +1,9 @@
 <template>
-  <blockquote class="book">
-    <slot/>
-    <footer>
-      <cite class="has-text-weight-normal">
-        <router-link :to="url" target="_blank">&mdash; {{ title }}</router-link>
-      </cite>
-    </footer>
-  </blockquote>
+  <div class="blockquote">
+    <div class="divider">* * *</div>
+    <slot />
+    <router-link :to="url" :title="title" target="_blank"><b-icon size="is-small" icon="redo"></b-icon></router-link>
+  </div>
 </template>
 
 <script>
@@ -42,19 +39,18 @@
 <style lang="scss">
   @import "@/assets/variables.scss";
 
-  blockquote.book {
-    padding: 0 0.75em;
-    border-left: 2px solid $border;
-    margin-bottom: 1.5em !important;
-    background-color: $white !important;
+  .blockquote p:last-of-type {
+    display: inline;
+    margin-right: 5px;
   }
 
-  blockquote.book p {
-    margin-bottom: 0.5em !important;
+  .title + .blockquote .divider,
+  .subtitle + .blockquote .divider {
+    display: none;
   }
 
-  blockquote.book cite {
-    font-style: normal;
-    margin-left: 0.75em;
+  .divider {
+    display: table;
+    margin: 15px auto 10px auto;
   }
 </style>

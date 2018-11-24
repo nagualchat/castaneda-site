@@ -7,6 +7,8 @@ import VueShortkey from 'vue-shortkey';
 import VueScrollTo from 'vue-scrollto';
 import VueClipboard from 'vue-clipboard2';
 
+Vue.config.productionTip = false;
+
 Vue.use(Buefy);
 Vue.use(VueScrollTo);
 Vue.use(VueClipboard);
@@ -22,14 +24,10 @@ Vue.directive('focus', {
       el.focus();
     })
   }
-})
+});
 
 new Vue({
-  el: '#app',
-  store,
   router,
-  components: {
-    App
-  },
-  template: '<App/>'
-})
+  store,
+  render: h => h(App)
+}).$mount('#app');

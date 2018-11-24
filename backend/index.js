@@ -13,8 +13,9 @@ app.use(cors());
 
 app.use(require("./routes/search"));
 app.use(require("./routes/books"));
+app.use(require("./routes/etc"));
 
-mongoose.connect(config.dbURL, config.dbOptions);
+mongoose.connect(config.dbUrl, config.dbOptions);
 mongoose.connection
   .once("open", () => {
     console.log("Mongoose - соединение установлено ...");

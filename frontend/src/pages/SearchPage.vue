@@ -4,10 +4,10 @@
     <div v-if="!query" class="level is-hidden-touch">
       <div class="level-left"></div>
       <div class="level-right">
-        <a class="level-item invert-link" href="tg://resolve?domain=nagualchat" title="Группа в телеграме">
+        <a class="level-item invert-link" href="https://tgclick.com/nagualchat" target="_blank" title="Группа в телеграме">
           <b-icon pack="fab" icon="telegram" size="is-medium"></b-icon>
         </a>
-        <a class="level-item invert-link" href="https://github.com/nagualchat/nagualchat-site" target="_blank" title="Гитхаб">
+        <a class="level-item invert-link" href="https://github.com/nagualchat/nagualism-site" target="_blank" title="Исходный код">
           <b-icon pack="fab" icon="github" size="is-medium"></b-icon>
         </a>
       </div>

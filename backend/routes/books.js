@@ -24,10 +24,4 @@ router.get("/get-book", (request, response) => {
   });
 })
 
-router.get("/test", (request, response) => {
-
-  response.send("TEST");
-
-})
-
 module.exports = router

@@ -8,7 +8,7 @@ const elastic = new elasticsearch.Client({ host: config.esUrl, log: "error" });
 
 router.get("/search", (request, response) => {
   let query = request.query.query;
-  let books = request.query.filter.split(',');
+  let books = request.query.books.split(',');
   let offset = request.query.offset || 0;
 
   elastic.search({

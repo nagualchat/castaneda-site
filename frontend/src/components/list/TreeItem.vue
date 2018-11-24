@@ -186,12 +186,12 @@
   }
 
   #tree ul,
-  li {
+  #tree li {
     list-style: none;
     padding-left: 10px;
   }
 
-  li:first-child {
+  #tree li:first-child {
     margin-top: 4px;
   }
 

@@ -2,7 +2,7 @@
   <div id="info">
     <div class="columns is-centered">
       <div class="column is-10-tablet is-9-desktop is-8-widescreen is-7-fullhd">
-        <b-tabs v-model="activeTab">
+        <b-tabs v-model="activeTab" :animated="false">
 
           <b-tab-item label="О приложении">
             <div class="content">
@@ -10,13 +10,13 @@
             </div>
           </b-tab-item>
 
-          <b-tab-item label="Рассказ Клары">
+          <b-tab-item label="Книга Тайши">
             <div class="content">
               <tab-one/>
             </div>
           </b-tab-item>
 
-          <b-tab-item label="История Флоринды">
+          <b-tab-item label="Книги Кастанеды">
             <div class="content">
               <tab-two/>
             </div>

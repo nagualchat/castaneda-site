@@ -112,7 +112,7 @@
       },
 
       importFile() {
-        this.$store.dispatch('importList', this.file[0]);
+        this.$store.dispatch('importList', this.file);
       },
 
     }
