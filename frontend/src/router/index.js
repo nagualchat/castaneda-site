@@ -10,41 +10,42 @@ import LibraryPage from '@/pages/LibraryPage';
 import ReaderPage from '@/pages/ReaderPage';
 import ListPage from '@/pages/ListPage';
 import ListInfo from '@/pages/ListInfo';
+import CalendarPage from '@/pages/CalendarPage';
 
 export default new Router({
-    linkActiveClass: 'is-active',
-    mode: 'history',
-    routes: [{
-        path: '/',
-        redirect: '/search'
+  linkActiveClass: 'is-active',
+  mode: 'history',
+  routes: [{
+      path: '/',
+      redirect: '/search'
     },
-        {
-            path: '/search',
-            component: SearchPage
-        },
-        {
-            path: '/lib',
-            component: LibraryPage
-        },
-        {
-            path: '/list',
-            component: ListPage
-        },
-        {
-            path: '/list-info',
-            component: ListInfo
-        },
-        {
-            path: '/reader',
-            component: ReaderPage
-        },
-        {
-            path: '/calendar',
-            component: CalendarPage
-        },
-        {
-            path: '*',
-            redirect: '/'
-        }
-    ]
+    {
+      path: '/search',
+      component: SearchPage
+    },
+    {
+      path: '/lib',
+      component: LibraryPage
+    },
+    {
+      path: '/list',
+      component: ListPage
+    },
+    {
+      path: '/list-info',
+      component: ListInfo
+    },
+    {
+      path: '/reader',
+      component: ReaderPage
+    },
+    {
+      path: '/calendar',
+      component: CalendarPage
+    },
+    {
+      path: '*',
+      redirect: '/'
+    }
+  ]
 })
