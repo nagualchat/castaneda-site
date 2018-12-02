@@ -12,35 +12,39 @@ import ListPage from '@/pages/ListPage';
 import ListInfo from '@/pages/ListInfo';
 
 export default new Router({
-  linkActiveClass: 'is-active',
-  mode: 'history',
-  routes: [{
-      path: '/',
-      redirect: '/search'
+    linkActiveClass: 'is-active',
+    mode: 'history',
+    routes: [{
+        path: '/',
+        redirect: '/search'
     },
-    {
-      path: '/search',
-      component: SearchPage
-    },
-    {
-      path: '/lib',
-      component: LibraryPage
-    },
-    {
-      path: '/list',
-      component: ListPage
-    },
-    {
-      path: '/list-info',
-      component: ListInfo
-    },
-    {
-      path: '/reader',
-      component: ReaderPage
-    },
-    {
-      path: '*',
-      redirect: '/'
-    }
-  ]
+        {
+            path: '/search',
+            component: SearchPage
+        },
+        {
+            path: '/lib',
+            component: LibraryPage
+        },
+        {
+            path: '/list',
+            component: ListPage
+        },
+        {
+            path: '/list-info',
+            component: ListInfo
+        },
+        {
+            path: '/reader',
+            component: ReaderPage
+        },
+        {
+            path: '/calendar',
+            component: CalendarPage
+        },
+        {
+            path: '*',
+            redirect: '/'
+        }
+    ]
 })
