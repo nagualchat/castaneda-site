@@ -10,6 +10,7 @@ import LibraryPage from '@/pages/LibraryPage';
 import ReaderPage from '@/pages/ReaderPage';
 import ListPage from '@/pages/ListPage';
 import ListInfo from '@/pages/ListInfo';
+import CalendarPage from '@/pages/CalendarPage';
 
 export default new Router({
   linkActiveClass: 'is-active',
@@ -37,6 +38,10 @@ export default new Router({
     {
       path: '/reader',
       component: ReaderPage
+    },
+    {
+      path: '/calendar',
+      component: CalendarPage
     },
     {
       path: '*',
