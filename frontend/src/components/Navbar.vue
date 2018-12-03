@@ -23,6 +23,7 @@
           <router-link class="navbar-item" to="/search">Поиск</router-link>
           <router-link class="navbar-item" to="/lib">Библиотека</router-link>
           <router-link class="navbar-item" to="/list">Перепросмотр</router-link>
+          <router-link class="navbar-item" to="/calendar">Календарь</router-link>
 
           <a class="navbar-item is-hidden-desktop" href="tg://resolve?domain=nagualchat" target="_blank">
             <span>Группа в телеграме</span>
