@@ -1,14 +1,3 @@
-const debounce = (callback, time) => {
-  let interval;
-  return (...args) => {
-    clearTimeout(interval);
-    interval = setTimeout(() => {
-      interval = null;
-      callback(...args);
-    }, time);
-  };
-};
-
 const getIndex = (node, id) => {
   return node.map((el) => el.id).indexOf(id);
 }
@@ -25,19 +14,6 @@ const getNode = (tree, id) => {
     }
   });
   return node;
-}
-
-const getLinks = (tree, id) => {
-  var nodes = [];
-  tree.some(function(n) {
-    if (n.link === id) {
-     nodes.push(n);
-    }
-    if (n.children) {
-      nodes.push(getLinks(n.children, id));
-    }
-  });
-  return nodes || null;
 }
 
 const getParent = (tree, id) => {
@@ -66,10 +42,17 @@ const findPrevSibling = (tree, id) => {
   }
 }
 
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 export default {
   getIndex,
   getNode,
-  getLinks,
   getParent,
-  findPrevSibling
+  findPrevSibling,
+  uuid,
 };

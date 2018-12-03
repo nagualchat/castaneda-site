@@ -68,18 +68,6 @@ export default {
   RENAME_ITEM(state, payload) {
     var node = utils.getNode(state.openList.tree, payload);
     node.name = state.nameBuffer;
-
-    function renameLinks(tree, id) {
-      for (let i = 0; i < tree.length; ++i) {
-        if (tree[i].link === id) {
-          tree[i].name = state.nameBuffer;
-        } else {
-          renameLinks(tree[i].children, id);
-        }
-      }
-    }
-
-    renameLinks(state.openList.tree, payload);
   },
 
   TOGGLE_EDIT_NOTE_MODE(state, payload) {
@@ -93,17 +81,6 @@ export default {
   EDIT_NOTE(state, payload) {
     var node = utils.getNode(state.openList.tree, payload);
     node.note = state.noteBuffer;
-
-    function changeLinks(tree, id) {
-      for (let i = 0; i < tree.length; ++i) {
-        if (tree[i].link === id) {
-          tree[i].note = state.noteBuffer;
-        } else {
-          changeLinks(tree[i].children, id);
-        }
-      }
-    }
-    changeLinks(state.openList.tree, payload);
   },
 
   DELETE_ITEM(state, payload) {
@@ -115,17 +92,6 @@ export default {
       var index = utils.getIndex(parent.children, payload);
       parent.children.splice(index, 1);
     }
-
-    function removeLinks(tree, id) {
-      for (let i = 0; i < tree.length; ++i) {
-        if (tree[i].link === id) {
-          tree.splice(i, 1);
-        } else {
-          removeLinks(tree[i].children, id);
-        }
-      }
-    }
-    removeLinks(state.openList.tree, payload);
   },
 
   SET_EXPAND(state, payload) {
@@ -141,38 +107,12 @@ export default {
 
   SET_ITEM_COLOR(state, payload) {
     var found = utils.getNode(state.openList.tree, state.selectedItem);
-    if (!found.link) {
-      found.color = parseInt(payload);
-    }
-
-    function changeLinks(tree, id) {
-      for (let i = 0; i < tree.length; ++i) {
-        if (tree[i].link === id) {
-          tree[i].color = parseInt(payload);
-        } else {
-          changeLinks(tree[i].children, id);
-        }
-      }
-    }
-    changeLinks(state.openList.tree, found.id);
+    found.color = parseInt(payload);
   },
 
   TOGGLE_COMPLETE(state) {
     var found = utils.getNode(state.openList.tree, state.selectedItem);
-    if (!found.link) {
-      found.complete = !found.complete;
-    }
-
-    function changeLinks(tree, id) {
-      for (let i = 0; i < tree.length; ++i) {
-        if (tree[i].link === id) {
-          tree[i].complete = found.complete;
-        } else {
-          changeLinks(tree[i].children, id);
-        }
-      }
-    }
-    changeLinks(state.openList.tree, state.selectedItem);
+    found.complete = !found.complete;
   },
 
   // Расскладывает дерево в плоский массив

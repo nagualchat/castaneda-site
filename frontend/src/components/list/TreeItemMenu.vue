@@ -1,6 +1,6 @@
 <template>
-  <b-dropdown class="list-item-menu" ref="listdropdown" v-show="!item.link">
-    <a class="icon element-icon invert-link" slot="trigger" title="Меню" v-show="!item.link">
+  <b-dropdown class="list-item-menu" ref="listdropdown">
+    <a class="icon element-icon invert-link" slot="trigger" title="Меню">
       <b-icon custom-size="mdi-18px" icon="dots-vertical"></b-icon>
     </a>
     <b-dropdown-item custom>
@@ -30,12 +30,7 @@
       <span>{{ item.complete ? 'Убрать отметку' : 'Отметить выполненным'}}</span>
     </b-dropdown-item>
 
-
     <b-dropdown-item separator></b-dropdown-item>
-    <b-dropdown-item @click="createLink(item)">
-      <b-icon custom-size="mdi-18px" icon="link-variant"></b-icon>
-      <span>Создать ссылку</span>
-    </b-dropdown-item>
     <b-dropdown-item @click="renameItem(item.id)">
       <b-icon custom-size="mdi-18px" icon="pencil"></b-icon>
       <span>Переименовать</span>
@@ -56,7 +51,7 @@
 
     methods: {
       ...mapMutations(['TOGGLE_COMPLETE', 'SET_ITEM_COLOR']),
-      ...mapActions(['createLink', 'renameItem', 'editNote', 'removeItem', ])
+      ...mapActions(['renameItem', 'editNote', 'removeItem', ])
     }
   }
 </script>

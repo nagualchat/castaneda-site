@@ -58,7 +58,7 @@
           <tree v-if="openList.tree[0]" id="tree" :treeData="openList.tree" />
           <empty-tree-adding v-if="flatTree && !openList.tree[0]" />
 
-          <debug-panel @clear="сlearStorage()" v-show="isDebug" />
+          <debug-panel @clear="сlearStorage()" v-if="isDebug" />
 
         </div>
       </div>
@@ -128,7 +128,7 @@
 
       showSnackbar() {
         this.$snackbar.open({
-          duration: 20000,
+          duration: 10000,
           message: `Элемент удалён`,
           type: 'is-danger',
           position: 'is-bottom-right',

@@ -1,5 +1,4 @@
-import moment from "moment";
-moment.locale("ru");
+import dateFormat from 'dateformat';
 
 // Склонения вариантов в массиве titles можно определить, приставляя слово к цифрам 1, 3 и 5
 function declint(number, titles) {
@@ -46,9 +45,8 @@ export default {
   },
 
   createdDate: state => {
-    let date = moment(state.openList.created).format("DD.MM.YY");
-    let ago = moment(state.openList.created).fromNow();
-    return `${date} (${ago})`;
+    var date = dateFormat(state.openList.created, 'dd.mm.yy');
+    return date;
   }
 
 }

@@ -22,8 +22,8 @@
         <div class="navbar-end" @click="isMenuOpen = !isMenuOpen">
           <router-link class="navbar-item" to="/search">Поиск</router-link>
           <router-link class="navbar-item" to="/lib">Библиотека</router-link>
-          <router-link class="navbar-item" to="/list">Перепросмотр</router-link>
-          <router-link class="navbar-item" to="/calendar">Календарь</router-link>
+          <router-link class="navbar-item" to="/calendar">18 дневный цикл</router-link>
+          <router-link class="navbar-item" to="/list">Перепросмотра</router-link>
 
           <a class="navbar-item is-hidden-desktop" href="tg://resolve?domain=nagualchat" target="_blank">
             <span>Группа в телеграме</span>
@@ -35,13 +35,6 @@
             <b-icon size="is-small" icon="open-in-new"></b-icon>
           </a>
 
-          <div class="navbar-item">
-            <span class="is-hidden-desktop">Ночная тема</span>
-
-            <b-switch size="is-small" v-model="isThemeChecked" title="Ночная тема" disabled></b-switch>
-            <b-icon class="is-hidden-touch" custom-size="mdi-18px" icon="weather-night"></b-icon>
-
-          </div>
         </div>
       </div>
 
@@ -55,17 +48,6 @@
     data() {
       return {
         isMenuOpen: false,
-      }
-    },
-
-    computed: {
-      isThemeChecked: {
-        get() {
-          return this.$store.state.main.isDarkTheme;
-        },
-        set(value) {
-          this.$store.commit('SET_DARK_THEME', value);
-        }
       }
     },
 

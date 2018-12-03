@@ -1,5 +1,4 @@
 const state = {
-  isDarkTheme: false,
 
   books: [
     { id: 'cc1c', title: 'Учение дона Хуана', author: 'Карлос Кастанеда', tshort: 'КК 1', ashort: 'К. Кастанеда' },
@@ -18,12 +17,7 @@ const state = {
   ]
 }
 
-const mutations = {
-  SET_DARK_THEME(state, payload) {
-    state.isDarkTheme = payload
-  }
-}
-
+const mutations = {}
 const actions = {}
 
 export default {

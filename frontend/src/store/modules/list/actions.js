@@ -1,5 +1,4 @@
-import uuid from 'uuid/v4';
-import moment from 'moment';
+import dateFormat from 'dateformat';
 import localforage from 'localforage';
 import utils from './utils';
 
@@ -97,10 +96,8 @@ export default {
   // Переименование
   async renameItem({ state, commit }) {
     var found = utils.getNode(state.openList.tree, state.selectedItem);
-    if (!found.link) {
-      commit('SET_NAME_BUFFER', found.name);
-      commit('TOGGLE_RENAME_MODE', true);
-    }
+    commit('SET_NAME_BUFFER', found.name);
+    commit('TOGGLE_RENAME_MODE', true);
   },
 
   renameDone({ state, commit }) {
@@ -120,10 +117,8 @@ export default {
   // Добавление/изменение заметки
   async editNote({ state, commit }) {
     var found = utils.getNode(state.openList.tree, state.selectedItem);
-    if (!found.link) {
-      commit('SET_NOTE_BUFFER', found.note);
-      commit('TOGGLE_EDIT_NOTE_MODE', true);
-    }
+    commit('SET_NOTE_BUFFER', found.note);
+    commit('TOGGLE_EDIT_NOTE_MODE', true);
   },
 
   editNoteDone({ state, commit }) {
@@ -140,7 +135,7 @@ export default {
   addDone({ state, commit }) {
     var name = state.addName.trim();
     if (!name) return;
-    var item = { id: uuid(), name: name, note: '', color: 0, complete: false, expand: true, children: [] };
+    var item = { id: utils.uuid(), name: name, note: '', color: 0, complete: false, expand: true, children: [] };
 
     commit('ADD_NEW_ITEM', { id: state.selectedItem, add: item });
     commit('TOGGLE_ADD_MODE', false);
@@ -151,12 +146,6 @@ export default {
   addCancel({ commit }) {
     commit('TOGGLE_ADD_MODE', false);
     commit('SET_ADD_NAME', '');
-  },
-
-  // Создание ссылки
-  createLink({ commit }, payload) {
-    var item = { id: uuid(), name: payload.name, link: payload.id, note: payload.note, color: payload.color, complete: payload.complete, expand: true, children: [] };
-    commit('ADD_NEW_ITEM', { id: payload.id, add: item });
   },
 
   removeItem({ state, commit, dispatch }) {
@@ -201,7 +190,7 @@ export default {
 
   async createList({ state, dispatch }) {
     var list = state.defaultList;
-    list.id = uuid();
+    list.id = utils.uuid();
     list.created = new Date().getTime();
 
     await dispatch('nameCount');
@@ -264,12 +253,13 @@ export default {
     var value = await localforage.getItem('list-' + payload);
     var list = JSON.parse(value);
 
-    const a = document.createElement('a');
+    var a = document.createElement('a');
     document.body.appendChild(a);
-    const blob = new Blob([JSON.stringify(list)], { type: 'text/plain;charset=utf-8' });
-    const downloadLink = window.URL.createObjectURL(blob);
+    var blob = new Blob([JSON.stringify(list)], { type: 'text/plain;charset=utf-8' });
+    var downloadLink = window.URL.createObjectURL(blob);
     a.href = downloadLink;
-    a.download = `${list.title} (${moment().format('DD-MM-YY hh-mm')}).json`
+    var date = dateFormat(new Date(), 'dd-mm-yyyy hh:mm');
+    a.download = `${list.title} (${date}).json`
     a.click();
     window.URL.revokeObjectURL(downloadLink);
   },
@@ -278,7 +268,7 @@ export default {
     const reader = new FileReader();
     reader.onloadend = async function(e) {
       var list = JSON.parse(e.target.result);
-      list.id = uuid();
+      list.id = utils.uuid();
       await localforage.setItem('list-' + list.id, JSON.stringify(list));
       await dispatch('getLists');
     }

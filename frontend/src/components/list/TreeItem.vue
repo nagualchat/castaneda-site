@@ -44,15 +44,6 @@
             <b-icon custom-size="mdi-18px" icon="plus"></b-icon>
           </a>
           <tree-item-menu :item="item" />
-          <a class="icon element-icon invert-link" v-show="item.link" @click="DELETE_ITEM(item.id)" title="Удалить ссылку">
-            <b-icon custom-size="mdi-18px" icon="link-variant-off"></b-icon>
-          </a>
-        </div>
-
-        <div v-else>
-          <a class="icon-inactive" v-show="item.link" title="Это ссылка">
-            <b-icon custom-size="mdi-18px" icon="link-variant"></b-icon>
-          </a>
         </div>
       </div>
     </div>
