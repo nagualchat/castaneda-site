@@ -76,7 +76,8 @@
       <tr>
         <td>Подборка видеозаписей</td>
         <td>
-          <a href="https://rutracker.org/forum/viewtopic.php?t=5174782" target="_blank">rutracker</a>
+          <a href="https://rutracker.org/forum/viewtopic.php?t=5174782" target="_blank">rutracker</a>,
+          <a href="https://yadi.sk/d/wZ8Cs8dyzzbbuw" target="_blank">yadisk</a>
         </td>
       </tr>
     </table>
