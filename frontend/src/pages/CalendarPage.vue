@@ -12,7 +12,7 @@
         <div v-if="view==='month'" v-on:click="nextMonth()" class="level-item invert-link is-borderless"><b-icon icon="chevron-right"></b-icon></div>
       </div>
       <div class="calendar-nav-group">
-        <div v-if="view==='month'" v-on:click="view='year'" class="button">Назад</div>
+        <div v-if="view==='month'" v-on:click="view='year'" class="level-item invert-link is-borderless">Назад</div>
         <!--<div v-if="view==='year'" v-on:click="view='month'" class="calendar-btn">Месяц</div>-->
       </div>
     </div>
