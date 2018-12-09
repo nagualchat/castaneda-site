@@ -614,7 +614,7 @@ $selectedDayBorderColor: lighten($dark, 20%);
     justify-content: center;
     .calendar-month {
       width: 360px;
-      padding: 14px 14px 0;
+      padding: 14px 30px 0;
     }
     .calendar-selected-day {
       width: 700px;
@@ -641,12 +641,13 @@ $selectedDayBorderColor: lighten($dark, 20%);
     }
     .calendar-days-names {
       display: flex;
+      justify-content: space-between;
       width: 100%;
       padding: 2px 0 2px;
       font-weight: bold;
     }
     .calendar-day-name {
-      width: 13%;
+      width: 14%;
       height: 30px;
       text-align: center;
       color: $dark;
@@ -654,11 +655,12 @@ $selectedDayBorderColor: lighten($dark, 20%);
     }
     .calendar-week {
       display: flex;
+      justify-content: space-between;
       width: 100%;
     }
     .calendar-day-wrapper {
       position: relative;
-      width: 13%;
+      width: 14%;
       text-align: center;
       color: $unrelatedColor;
       background-color: $white;
