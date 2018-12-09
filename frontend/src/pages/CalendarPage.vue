@@ -617,7 +617,7 @@ $selectedDayBorderColor: lighten($dark, 20%);
       padding: 14px 30px 0;
     }
     .calendar-selected-day {
-      width: 700px;
+      width: 720px;
       padding: 14px 14px 0;
       overflow: auto;
       a > span {
