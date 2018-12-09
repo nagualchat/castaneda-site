@@ -604,6 +604,7 @@ $selectedDayBorderColor: lighten($dark, 20%);
       div {
         padding: 3px 14px 6px;
         text-align: center;
+        margin-bottom: 0;
       }
     }
   }
