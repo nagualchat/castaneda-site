@@ -32,7 +32,7 @@ function indexingParagraphs() {
     await elastic.indices.create({ index: 'paragraphs' });
     console.log('Индекс пересоздан\n');
 
-    await tools.asyncForEach(files, async (file, index) => {
+    await asyncForEach(files, async (file, index) => {
       var filename = file.substr(0, file.lastIndexOf("."));
       var info = parser.parseBookInfo(dir, file);
       var paragraphs = parser.parseParagraphs(dir, file, info);

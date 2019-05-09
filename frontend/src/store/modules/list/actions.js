@@ -258,7 +258,7 @@ export default {
     var blob = new Blob([JSON.stringify(list)], { type: 'text/plain;charset=utf-8' });
     var downloadLink = window.URL.createObjectURL(blob);
     a.href = downloadLink;
-    var date = dateFormat(new Date(), 'dd-mm-yyyy hh:mm');
+    var date = dateFormat(new Date(), 'dd-mm-yyyy hh-mm');
     a.download = `${list.title} (${date}).json`
     a.click();
     window.URL.revokeObjectURL(downloadLink);

@@ -200,7 +200,7 @@
     </table>
 
     <div id="download-all" class="has-text-centered">
-      <a class="button is-light" href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/nagualchat/nagualism-site/tree/master/frontend/lib" target="_blank"><b-icon icon="download"></b-icon><span>Скачать все книги одним архивом</span></a>
+      <a class="button is-light" href="https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/nagualchat/nagualism-site/tree/master/frontend/public/books" target="_blank"><b-icon icon="download"></b-icon><span>Скачать все книги одним архивом</span></a>
     </div>
 
   </div>

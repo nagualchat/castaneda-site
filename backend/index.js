@@ -15,7 +15,7 @@ app.use(require("./routes/search"));
 app.use(require("./routes/books"));
 app.use(require("./routes/etc"));
 
-mongoose.connect(config.dbUrl, config.dbOptions);
+mongoose.connect(config.dbUrl, { useNewUrlParser: true });
 mongoose.connection
   .once("open", () => {
     console.log("Mongoose - соединение установлено ...");

@@ -48,8 +48,8 @@ router.get("/search", (request, response) => {
   })
 
   if (offset == 0) {
-    var item = new SearchQuery({ query, books })
-    item.save(function(err) { if (err) handleError(err) })
+    var item = new SearchQuery({ query, books: books.join(',') })
+    item.save(function(err) { if (err) console.log(err) })
   }
 })
 
