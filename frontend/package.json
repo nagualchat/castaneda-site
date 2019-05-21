@@ -8,27 +8,27 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "buefy": "0.7.0",
+    "buefy": "0.7.6",
     "dateformat": "3.0.3",
     "debounce": "1.2.0",
     "localforage": "1.7.3",
-    "vue": "2.5.17",
-    "vue-clipboard2": "^0.2.1",
-    "vue-infinite-loading": "2.4.0",
-    "vue-meta": "1.5.5",
-    "vue-router": "3.0.2",
-    "vue-scrollto": "2.13.0",
-    "vue-shortkey": "3.1.6",
-    "vuedraggable": "^2.16.0",
-    "vuex": "^3.0.1"
+    "vue": "2.6.10",
+    "vue-clipboard2": "^0.3.0",
+    "vue-infinite-loading": "2.4.4",
+    "vue-meta": "1.6.0",
+    "vue-router": "3.0.6",
+    "vue-scrollto": "2.15.0",
+    "vue-shortkey": "3.1.7",
+    "vuedraggable": "2.21.0",
+    "vuex": "3.1.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.1.1",
-    "@vue/cli-service": "3.1.4",
-    "node-sass": "^4.9.0",
+    "@vue/cli-plugin-babel": "3.7.0",
+    "@vue/cli-service": "3.7.0",
+    "node-sass": "4.12.0",
     "pug": "2.0.3",
     "pug-plain-loader": "1.0.0",
     "sass-loader": "^7.0.1",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "2.6.10"
   }
 }

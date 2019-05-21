@@ -6,9 +6,9 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "elasticsearch": "^15.1.1",
-    "htmlparser2": "^3.9.2",
-    "mongoose": "^5.2.5",
+    "elasticsearch": "16.0.0",
+    "htmlparser2": "3.10.1",
+    "mongoose": "5.5.10",
     "xml2js": "^0.4.19"
   }
 }
