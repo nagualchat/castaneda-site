@@ -1,14 +1,14 @@
-const fs = require('fs')
-const mongoose = require("mongoose")
-const elasticsearch = require('elasticsearch')
-const parser = require('./parser')
+const fs = require('fs');
+const mongoose = require('mongoose');
+const elasticsearch = require('elasticsearch');
+const parser = require('./parser');
 
-const Book = require("../backend/models/book");
-const Chapter = require("../backend/models/chapter");
+const Book = require('./models/book');
+const Chapter = require('./models/chapter');
 const config = require('../backend/config')
 
 const elastic = new elasticsearch.Client({ host: config.esUrl });
-mongoose.connect(config.dbURL);
+mongoose.connect(config.dbUrl, { useNewUrlParser: true });
 
 // Функция асинхронного ForEach
 async function asyncForEach(array, callback) {
@@ -61,17 +61,17 @@ function indexingParagraphs() {
 
 function createBooksDb() {
   fs.readdir(dir, async function(err, files) {
-    console.log(files)
+    //console.log(files);
     var body = [];
     var count = 0;
 
-    await Book.remove({}, function(err) {
+    await Book.deleteMany({}, function(err) {
       if (err) return handleError(err);
       console.log('Коллекция очищена\n');
     });
 
     await asyncForEach(files, async (file) => {
-      count++
+      count++;
       var filename = file.substr(0, file.lastIndexOf("."));
       var info = parser.parseBookInfo(dir, file);
       console.log('Обрабатывается:', file);
@@ -85,11 +85,12 @@ function createBooksDb() {
 
 function createChaptersDb() {
   fs.readdir(dir, async function(err, files) {
+    //console.log(files);
     var body = [];
     var count = 0;
 
-    await Chapter.remove({}, function(err) {
-      if (err) return handleError(err);
+    await Chapter.deleteMany({}, function(err) {
+      if (err) return console.log(err);
       console.log('Коллекция очищена\n');
     });
 
@@ -109,8 +110,6 @@ function createChaptersDb() {
   })
 }
 
-indexingParagraphs()
-
-//createBooksDb()
-
-//createChaptersDb()
+  //indexingParagraphs()
+  //createBooksDb()
+  createChaptersDb()
