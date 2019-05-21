@@ -13,7 +13,9 @@ const state = {
     { id: 'cc10s', title: 'Активная сторона бесконечности', author: 'Карлос Кастанеда', tshort: 'КК 10', ashort: 'К. Кастанеда' },
     { id: 'cc11s', title: 'Колесо времени', author: 'Карлос Кастанеда', tshort: 'КК 11', ashort: 'К. Кастанеда' },
     { id: 'taisha', title: 'Магический переход', author: 'Тайша Абеляр', tshort: 'Тайша', ashort: 'Т. Абеляр' },
-    { id: 'florinda', title: 'Жизнь-в-сновидении', author: 'Флоринда Доннер', tshort: 'Флоринда', ashort: 'Ф. Доннер' }
+    { id: 'florinda', title: 'Жизнь-в-сновидении', author: 'Флоринда Доннер', tshort: 'Флоринда', ashort: 'Ф. Доннер' },
+    { id: 'interviews', title: 'Интервью', author: '', tshort: 'Интервью', ashort: '' },
+    { id: 'articles', title: 'Статьи', author: '', tshort: 'Статьи', ashort: '' }
   ]
 }
 

@@ -58,7 +58,7 @@
         isOptionsOpen: false,
         isHelpShow: false,
         query: this.inputQuery,
-        books: this.inputBooks || ['cc1c', 'cc2c', 'cc3n', 'cc4n', 'cc5n', 'cc6n', 'cc7n', 'cc8n', 'cc9n', 'cc10s', 'cc11s', 'taisha', 'florinda'],
+        books: this.inputBooks || ['cc1c', 'cc2c', 'cc3n', 'cc4n', 'cc5n', 'cc6n', 'cc7n', 'cc8n', 'cc9n', 'cc10s', 'cc11s', 'taisha', 'florinda', 'interviews', 'articles'],
       }
     },
 

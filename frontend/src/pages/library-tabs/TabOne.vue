@@ -168,7 +168,21 @@
 
     <table class="table">
       <tr>
-        <td>Кастанеда и другие — Лекции и интервью</td>
+        <td><router-link to="/reader?book=interviews&ch=0">Интервью</router-link></td>
+        <td></td>
+        <td>
+          <a href="/books/talks/Интервью.fb2">fb2</a>
+        </td>
+      </tr>
+      <tr>
+        <td><router-link to="/reader?book=articles&ch=0">Статьи</router-link></td>
+        <td></td>
+        <td>
+          <a href="/books/talks/Статьи.fb2">fb2</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Лекции и интервью</td>
         <td>Народная подборка</td>
         <td>
           <a href="/books/talks/Лекции и интервью (народная подборка).fb2">fb2</a>,
@@ -176,14 +190,14 @@
         </td>
       </tr>
       <tr>
-        <td>Кастанеда и другие — Лекции и интервью</td>
+        <td>Лекции и интервью</td>
         <td>София, 2001 г.</td>
         <td>
           <a href="/books/talks/Лекции и интервью (София, 2001г).pdf">pdf</a>
         </td>
       </tr>
       <tr>
-        <td>Кастанеда и другие — Лекции и интервью</td>
+        <td>Лекции и интервью</td>
         <td>София, 2010 г.</td>
         <td>
           <a href="/books/talks/Лекции и интервью (София, 2010г).fb2">fb2</a>,
